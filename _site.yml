@@ -1,11 +1,11 @@
 name: "tutorials"
 navbar:
-  title: "Resources for Various Tutorials"
+  title: "Resources for Tutorials"
   left:
     - text: "Home"
       href: index.html
     - text: "Tutorials"
-      icon: cog
+      icon: fa-cog
       menu:
         - text: "R Tutorials"
         - text: "Analyzing Heart Rate Variability in R"
@@ -17,14 +17,14 @@ navbar:
   right:
     - text: "About"
       href: about.html
-      icon: address-card
+      icon: fa-envelope
     - text: "Site info"
       href: site-info.html
-      icon: info
+      icon: fa-info
 output_dir: "docs"
 output:
   html_document:
-    theme: flatly
+    theme: cosmo
     highlight: textmate
     include:
       after_body: footer.html

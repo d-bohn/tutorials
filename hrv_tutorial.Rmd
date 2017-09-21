@@ -1,16 +1,79 @@
 ---
 title: "Analyzing HRV Data in R"
 author: "Daniel N. Albohn"
-date: "9/21/2017"
+date: "11/08/2017"
 output: 
   html_document:
-    theme: flatly
+    theme: cosmo
     css: style.css
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
 ```
 
+In preparation. Check back soon...
+
 # Preperation
+
+This tutorial will use the [`RHRV`](http://rhrv.r-forge.r-project.org) package for the
+majority of analyses and graphing.
+In addition, it will supplement these with custom functions (which can be found on the GitHub),
+and scripts from [`PhysioScript`](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3767411/).
+In general, this tutorial also attempts to follow the principles of tidy data,
+and will utilize various functions and
+ideas from the `tidyverse` group of packages.
+
+First, download a copy of the [zipped project]().
+Then, load all of the necessary packages into your session.
+
+```{r}
+
+check <- require(pacman)
+if(check==FALSE) {install.packages('pacman')} else(rm(check))
+
+pacman::p_load(RHRV, tidyverse, here)
+
+```
+
+Next, you can load the `PhysioScript` functions by using `load()`.
+
+```{r}
+
+here()
+load(here('R/hrv_tutorial/PhysioScript.RData'))
+
+```
+
+You can then examine what each of these functions do by clicking on them. If you
+have the desire to clean your Global Environment you can remove all of the functions
+by running the command `rm(list=ls())`.
+
+```{r}
+
+rm(list= ls()[!(ls() %in% c('process.ecg','extract.ibi'))])
+
+```
+
+
+## Tutorial Overview
+
+1). Extracting electrophysiology data from raw files
+
+2). Prepare files and compute interbeat interval
+
+3). Check for outliers and graph
+
+4). Obtain statistics
+
+5). Dealing with triggers
+
+6). Graphing
+
+
+
+
+
 

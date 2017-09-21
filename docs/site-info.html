@@ -15,13 +15,14 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -97,34 +98,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 60px;
+  padding-top: 51px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 
 .section h2 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h3 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h4 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h5 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h6 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 </style>
 
@@ -171,7 +172,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Resources for Various Tutorials</a>
+      <a class="navbar-brand" href="index.html">Resources for Tutorials</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -180,7 +181,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class=" cog"></span>
+    <span class="fa fa-cog"></span>
      
     Tutorials
      
@@ -202,14 +203,14 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="about.html">
-    <span class="address address-card"></span>
+    <span class="fa fa-envelope"></span>
      
     About
   </a>
 </li>
 <li>
   <a href="site-info.html">
-    <span class=" info"></span>
+    <span class="fa fa-info"></span>
      
     Site info
   </a>
@@ -243,13 +244,34 @@ $(document).ready(function () {
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## [1] tcltk     stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
+## 
+## other attached packages:
+##  [1] here_0.1               dplyr_0.7.2            purrr_0.2.3           
+##  [4] readr_1.1.1            tidyr_0.7.1            tibble_1.3.4          
+##  [7] ggplot2_2.2.1          tidyverse_1.1.1        RHRV_4.2.3            
+## [10] lomb_1.0               nonlinearTseries_0.2.3 Rcpp_0.12.12          
+## [13] TSA_1.01               mgcv_1.8-17            nlme_3.1-131          
+## [16] locfit_1.5-9.1         leaps_3.0              tseries_0.10-42       
+## [19] rgl_0.98.1             Matrix_1.2-10          waveslim_1.7.5        
+## [22] tkrplot_0.0-23         pacman_0.4.6          
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_3.4.1  backports_1.1.0 magrittr_1.5    rprojroot_1.2  
-##  [5] htmltools_0.3.6 tools_3.4.1     yaml_2.1.14     Rcpp_0.12.12   
-##  [9] stringi_1.1.5   rmarkdown_1.6   knitr_1.17      stringr_1.2.0  
-## [13] digest_0.6.12   rlang_0.1.2     evaluate_0.10.1 purrr_0.2.3</code></pre>
+##  [1] httr_1.3.1       jsonlite_1.5     modelr_0.1.1     shiny_1.0.5     
+##  [5] assertthat_0.2.0 TTR_0.23-2       cellranger_1.1.0 yaml_2.1.14     
+##  [9] backports_1.1.0  lattice_0.20-35  glue_1.1.1       quadprog_1.5-5  
+## [13] digest_0.6.12    rvest_0.3.2      colorspace_1.3-2 htmltools_0.3.6 
+## [17] httpuv_1.3.5     plyr_1.8.4       psych_1.7.5      pkgconfig_2.0.1 
+## [21] broom_0.4.2      haven_1.1.0      xtable_1.8-2     scales_0.5.0    
+## [25] lazyeval_0.2.0   quantmod_0.4-10  mnormt_1.5-5     magrittr_1.5    
+## [29] readxl_1.0.0     mime_0.5         evaluate_0.10.1  xml2_1.1.1      
+## [33] forcats_0.2.0    xts_0.10-0       foreign_0.8-69   tools_3.4.1     
+## [37] hms_0.3          stringr_1.2.0    munsell_0.4.3    bindrcpp_0.2    
+## [41] compiler_3.4.1   rlang_0.1.2      grid_3.4.1       htmlwidgets_0.9 
+## [45] rmarkdown_1.6    gtable_0.2.0     curl_2.8.1       reshape2_1.4.2  
+## [49] R6_2.2.2         zoo_1.8-0        lubridate_1.6.0  knitr_1.17      
+## [53] bindr_0.1        rprojroot_1.2    stringi_1.1.5    parallel_3.4.1</code></pre>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>
 

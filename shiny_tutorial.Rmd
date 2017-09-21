@@ -4,7 +4,7 @@ author: "Daniel N. Albohn"
 date: "9/21/2017"
 output: 
   html_document:
-    theme: flatly
+    theme: cosmo
     css: style.css
 ---
 
@@ -13,3 +13,5 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Preparation
+
+In preparation. Check back soon...
