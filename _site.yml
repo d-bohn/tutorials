@@ -1,0 +1,30 @@
+name: "tutorials"
+navbar:
+  title: "Resources for Various Tutorials"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Tutorials"
+      icon: cog
+      menu:
+        - text: "R Tutorials"
+        - text: "Analyzing Heart Rate Variability in R"
+          href: hrv_tutorial.html
+        - text: "Using Shiny for Psychological Research"
+          href: shiny_tutorial.html
+        - text: "---------"
+        - text: "Additional Tutorials"
+  right:
+    - text: "About"
+      href: about.html
+      icon: address-card
+    - text: "Site info"
+      href: site-info.html
+      icon: info
+output_dir: "docs"
+output:
+  html_document:
+    theme: flatly
+    highlight: textmate
+    include:
+      after_body: footer.html

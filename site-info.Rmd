@@ -1,0 +1,11 @@
+---
+title: "About the site"
+---
+
+This site is generated in [R Markdown](http://rmarkdown.rstudio.com/) using [RStudio](http://rstudio.com).
+
+The source code for this website can be found on [GitHub](https://github.com/d-bohn/tutorials).
+
+```{r}
+sessionInfo()
+```

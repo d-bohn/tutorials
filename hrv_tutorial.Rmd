@@ -1,0 +1,16 @@
+---
+title: "Analyzing HRV Data in R"
+author: "Daniel N. Albohn"
+date: "9/21/2017"
+output: 
+  html_document:
+    theme: flatly
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Preperation
+
