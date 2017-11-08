@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Daniel N. Albohn" />
+
+<meta name="date" content="2017-11-08" />
+
+<title>HRV Statistics</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Resources for Tutorials</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-cog"></span>
+     
+    Tutorials
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">R Tutorials</li>
+    <li>
+      <a href="hrv_tutorial.html">Analyzing Heart Rate Variability in R</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="extract_ecg.html">Extracting data</a>
+    </li>
+    <li>
+      <a href="compute_ibi.html">Computing interbeat interval</a>
+    </li>
+    <li>
+      <a href="ecg_outliers.html">HRV outlier analysis</a>
+    </li>
+    <li>
+      <a href="hrv_triggers.html">Dealing with triggers</a>
+    </li>
+    <li>
+      <a href="hrv_stats.html">HRV statistics</a>
+    </li>
+    <li>
+      <a href="shiny_tutorial.html">Using Shiny for Psychological Research</a>
+    </li>
+    <li class="divider"></li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Additional Tutorials</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">
+    <span class="fa fa-envelope"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="site-info.html">
+    <span class="fa fa-info"></span>
+     
+    Site info
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">HRV Statistics</h1>
+<h4 class="author"><em>Daniel N. Albohn</em></h4>
+<h4 class="date"><em>11/08/2017</em></h4>
+
+</div>
+
+
+<p>We finally have our cleaned IBI time series (derived from the cleaned and annotated ECG time series)! From here, we can use the <code>RHRV</code> package to analyze our data in a number of ways. Below, I build the time series and perform a frequency analysis on it. Finally, we will extract the high frequency signal for two of the marked points of interest.</p>
+<p>First, we load the data and create a new, blank HRV class using <code>CreateHRVData()</code>. This is where we will store everything as we proceed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RHRV)
+
+<span class="co"># Set up some global variables</span>
+path &lt;-<span class="st"> &#39;data/hrv_tutorial/&#39;</span>
+file &lt;-<span class="st"> &#39;sub1101_ecg_clean.txt&#39;</span>
+name &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;*_ecg_clean.txt&quot;</span>, <span class="st">&quot;&quot;</span>, file)
+
+hrv.data =<span class="st"> </span><span class="kw">CreateHRVData</span>()
+hrv.data =<span class="st"> </span><span class="kw">SetVerbose</span>(hrv.data, <span class="ot">FALSE</span>)
+hrv.data =<span class="st"> </span><span class="kw">LoadBeatRR</span>(hrv.data, <span class="dt">RecordName=</span><span class="kw">file.path</span>(path,file), <span class="dt">RecordPath=</span><span class="st">&quot;.&quot;</span>, <span class="dt">scale =</span> .<span class="dv">001</span>)</code></pre></div>
+<p>Below, we load the trigger file we created in the previous step and extract the info we need to overlay on the time series so the program knows where we want it to derive the statistics from. We add the triggers using <code>AddEpisodes()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We add the info about the episodes</span>
+file_ev &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;*_ecg_clean.txt&quot;</span>, <span class="st">&quot;&quot;</span>, file)
+
+<span class="kw">load</span>(<span class="kw">file.path</span>(path,<span class="kw">paste0</span>(name,<span class="st">&quot;_trigger.RData&quot;</span>)))
+InitTime &lt;-<span class="st"> </span>episodes<span class="op">$</span>InitTime
+Type &lt;-<span class="st"> </span>episodes<span class="op">$</span>trigger
+Duration &lt;-<span class="st"> </span>episodes<span class="op">$</span>Duration
+Value &lt;-<span class="st"> </span>episodes<span class="op">$</span>Value
+
+hrv.data =<span class="st"> </span><span class="kw">AddEpisodes</span>(hrv.data, <span class="dt">InitTimes =</span> episodes<span class="op">$</span>InitTime, 
+                       <span class="dt">Tags =</span> episodes<span class="op">$</span>Type,
+                       <span class="dt">Durations =</span> episodes<span class="op">$</span>Duration,
+                       <span class="dt">Values =</span> episodes<span class="op">$</span>Value)</code></pre></div>
+<p>Next, we can derive the instantaneous heart rate time series by using the cleaned IBI time series. This is possible because “instantaneous heart rate can be defined as the inverse of the time separation between two consecutive heart beats.”</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hrv.data =<span class="st"> </span><span class="kw">BuildNIHR</span>(hrv.data)
+hrv.data =<span class="st"> </span><span class="kw">FilterNIHR</span>(hrv.data)
+
+<span class="co"># plot all tags</span>
+<span class="co"># png(filename = paste(&quot;data/plots/&quot;,name,&quot;_tagged_plot.png&quot;,sep=&quot;&quot;), width=1000, height=669,</span>
+<span class="co">#     units=&quot;px&quot;)</span>
+<span class="kw">PlotNIHR</span>(hrv.data, <span class="dt">Tag=</span>episodes<span class="op">$</span>Type)
+<span class="co"># dev.off()</span>
+
+hrv.data =<span class="st"> </span><span class="kw">InterpolateNIHR</span>(hrv.data, <span class="dt">freqhr =</span> <span class="dv">4</span>)</code></pre></div>
+<div class="figure">
+<img src="data/plots/sub1101_tagged_plot.png" />
+
+</div>
+<p>Once everything is loaded into our <code>hrv.data</code> object, we can perform the frequency analysis with two commands: one to build a frequency analysis sub-object in our <code>hrv.data</code> object, and another to actual calculate the powerband. We can plot the powerband to check for any anomalies.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Perform frequency analysis</span>
+##Calculating spectrogram and power per band using wavelet analysis:
+hrv.data =<span class="st"> </span><span class="kw">CreateFreqAnalysis</span>(hrv.data)
+hrv.data =<span class="st"> </span><span class="kw">CalculatePowerBand</span>(hrv.data, <span class="dt">indexFreqAnalysis =</span> <span class="dv">1</span>, <span class="dt">type=</span><span class="st">&quot;wavelet&quot;</span>,
+                              <span class="dt">wavelet=</span><span class="st">&quot;d4&quot;</span>, <span class="dt">bandtolerance=</span><span class="fl">0.1</span>)
+
+<span class="co"># plot powerband for all files</span>
+<span class="co"># png(filename = paste(&quot;data/plots/&quot;,name,&quot;_powerband.png&quot;,sep=&quot;&quot;), width=1000, height=669,</span>
+<span class="co">#     units=&quot;px&quot;)</span>
+<span class="kw">PlotPowerBand</span>(hrv.data, <span class="dt">normalized =</span> <span class="ot">TRUE</span>, <span class="dt">hr =</span> <span class="ot">TRUE</span>, <span class="dt">Tag =</span> <span class="st">&quot;all&quot;</span>)
+<span class="co"># dev.off()</span></code></pre></div>
+<div class="figure">
+<img src="data/plots/sub1101_powerband.png" />
+
+</div>
+<p>Once we are satisfied with the frequency analysis, we can begin to chop up the data into parts that we will use to compare.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Save the data by stimulus type:</span>
+splitting.data1 =<span class="st"> </span><span class="kw">SplitPowerBandByEpisodes</span>(hrv.data, <span class="dt">indexFreqAnalysis =</span> <span class="dv">1</span>, <span class="dt">Tag =</span> <span class="kw">c</span>(<span class="st">&quot;event_type_1.29&quot;</span>))
+Baseline &lt;-<span class="st"> </span><span class="kw">log</span>(<span class="kw">mean</span>(splitting.data1<span class="op">$</span>OutEpisodes<span class="op">$</span>HF))
+
+splitting.data2 =<span class="st"> </span><span class="kw">SplitPowerBandByEpisodes</span>(hrv.data, <span class="dt">indexFreqAnalysis =</span> <span class="dv">1</span>, <span class="dt">Tag =</span> <span class="kw">c</span>(<span class="st">&quot;event_type_1.92&quot;</span>))
+Task &lt;-<span class="st"> </span><span class="kw">log</span>(<span class="kw">mean</span>(splitting.data2<span class="op">$</span>OutEpisodes<span class="op">$</span>HF))
+
+subject_nr &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">parse_number</span>(file)
+sub &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(subject_nr,Baseline,Task)
+
+<span class="kw">write.table</span>(sub, <span class="dt">file =</span> <span class="st">&quot;data/hrv_tutorial/hrv_extract_data.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>,
+            <span class="dt">col.names =</span> <span class="ot">TRUE</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)
+<span class="co"># Clean up</span>
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</code></pre></div>
+<p>Let’s make sure that our data were saved properly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">read.csv</span>(<span class="st">&#39;data/hrv_tutorial/hrv_extract_data.csv&#39;</span>))</code></pre></div>
+<pre><code>##   subject_nr Baseline     Task
+## 1       1101 6.150829 6.148532</code></pre>
+
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

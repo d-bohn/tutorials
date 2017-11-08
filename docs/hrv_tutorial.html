@@ -22,24 +22,52 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
+
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
-}
-</script>
-
 
 
 <style type="text/css">
@@ -195,9 +223,26 @@ $(document).ready(function () {
     <li>
       <a href="hrv_tutorial.html">Analyzing Heart Rate Variability in R</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="extract_ecg.html">Extracting data</a>
+    </li>
+    <li>
+      <a href="compute_ibi.html">Computing interbeat interval</a>
+    </li>
+    <li>
+      <a href="ecg_outliers.html">HRV outlier analysis</a>
+    </li>
+    <li>
+      <a href="hrv_triggers.html">Dealing with triggers</a>
+    </li>
+    <li>
+      <a href="hrv_stats.html">HRV statistics</a>
+    </li>
     <li>
       <a href="shiny_tutorial.html">Using Shiny for Psychological Research</a>
     </li>
+    <li class="divider"></li>
     <li class="divider"></li>
     <li class="dropdown-header">Additional Tutorials</li>
   </ul>
@@ -234,29 +279,34 @@ $(document).ready(function () {
 </div>
 
 
-<p>In preparation. Check back soon…</p>
+<div id="background" class="section level1">
+<h1>Background</h1>
+<p>Please see the <a href="ext/hrv_intro.html">brief presentation</a> on heart rate variability, QRS complex, and why HRV is important.</p>
+</div>
 <div id="preperation" class="section level1">
 <h1>Preperation</h1>
 <p>This tutorial will use the <a href="http://rhrv.r-forge.r-project.org"><code>RHRV</code></a> package for the majority of analyses and graphing. In addition, it will supplement these with custom functions (which can be found on the GitHub), and scripts from <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3767411/"><code>PhysioScript</code></a>. In general, this tutorial also attempts to follow the principles of tidy data, and will utilize various functions and ideas from the <code>tidyverse</code> group of packages.</p>
-<p>First, download a copy of the <a href="">zipped project</a>. Then, load all of the necessary packages into your session.</p>
-<pre class="r"><code>check &lt;- require(pacman)
-if(check==FALSE) {install.packages(&#39;pacman&#39;)} else(rm(check))</code></pre>
-<pre><code>## NULL</code></pre>
-<pre class="r"><code>pacman::p_load(RHRV, tidyverse, here)</code></pre>
+<p>If you would like to follow along, first either clone or download the <a href="https://github.com/d-bohn/tutorials">repository</a>. Then, load all of the necessary packages into your session.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">check &lt;-<span class="st"> </span><span class="kw">require</span>(pacman)
+<span class="cf">if</span>(check<span class="op">==</span><span class="ot">FALSE</span>) {<span class="kw">install.packages</span>(<span class="st">&#39;pacman&#39;</span>)} <span class="cf">else</span>(<span class="kw">rm</span>(check))
+
+pacman<span class="op">::</span><span class="kw">p_load</span>(RHRV, reticulate, here)</code></pre></div>
 <p>Next, you can load the <code>PhysioScript</code> functions by using <code>load()</code>.</p>
-<pre class="r"><code>here()</code></pre>
-<pre><code>## [1] &quot;/Users/dalbohn/Documents/School Work/tutorials&quot;</code></pre>
-<pre class="r"><code>load(here(&#39;R/hrv_tutorial/PhysioScript.RData&#39;))</code></pre>
-<p>You can then examine what each of these functions do by clicking on them. If you have the desire to clean your Global Environment you can remove all of the functions by running the command <code>rm(list=ls())</code>.</p>
-<pre class="r"><code>rm(list= ls()[!(ls() %in% c(&#39;process.ecg&#39;,&#39;extract.ibi&#39;))])</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Check to see where your root directory is
+## Make sure it is inside of the project folder
+<span class="kw">here</span>()
+<span class="kw">load</span>(<span class="kw">here</span>(<span class="st">&#39;R/hrv_tutorial/PhysioScript.RData&#39;</span>))</code></pre></div>
+<p>You can then examine what each of these functions do by clicking on them. If you have the desire to clean your Global Environment you can remove all of the functions by running the command <code>rm(list=ls())</code>, or all of them except specific ones by naming them explicitly to keep like so:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list=</span> <span class="kw">ls</span>()[<span class="op">!</span>(<span class="kw">ls</span>() <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;process.ecg&#39;</span>,<span class="st">&#39;extract.ibi&#39;</span>, <span class="st">&#39;read.vars&#39;</span>, <span class="st">&#39;read.data&#39;</span>))])</code></pre></div>
+<p>Lastly, we will be using some python code to read in the raw AcqKnowledge files. If you are familiar with python, and have <code>pip</code> installed on your system, you can execute the following command to get the necessary package.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">pip</span> install bioread</code></pre></div>
 <div id="tutorial-overview" class="section level2">
 <h2>Tutorial Overview</h2>
-<p>1). Extracting electrophysiology data from raw files</p>
-<p>2). Prepare files and compute interbeat interval</p>
-<p>3). Check for outliers and graph</p>
-<p>4). Obtain statistics</p>
-<p>5). Dealing with triggers</p>
-<p>6). Graphing</p>
+<p>1). <a href="extract_ecg.html">Extracting electrophysiology data from raw files</a></p>
+<p>2). <a href="compute_ibi.html">Prepare files and compute interbeat interval (IBI)</a></p>
+<p>3). <a href="ecg_outliers.html">Check for outliers and graph</a></p>
+<p>4). <a href="hrv_triggers.html">Dealing with triggers</a></p>
+<p>5). <a href="hrv_stats.html">Obtain statistics</a></p>
 </div>
 </div>
 

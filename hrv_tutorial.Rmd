@@ -11,10 +11,13 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE, eval=FALSE)
 ```
 
-In preparation. Check back soon...
+# Background
+
+Please see the [brief presentation](ext/hrv_intro.html)
+on heart rate variability, QRS complex, and why HRV is important.
 
 # Preperation
 
@@ -23,10 +26,10 @@ majority of analyses and graphing.
 In addition, it will supplement these with custom functions (which can be found on the GitHub),
 and scripts from [`PhysioScript`](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3767411/).
 In general, this tutorial also attempts to follow the principles of tidy data,
-and will utilize various functions and
-ideas from the `tidyverse` group of packages.
+and will utilize various functions and ideas from the `tidyverse` group of packages.
 
-First, download a copy of the [zipped project]().
+If you would like to follow along, first either clone or download the
+[repository](https://github.com/d-bohn/tutorials).
 Then, load all of the necessary packages into your session.
 
 ```{r}
@@ -34,7 +37,7 @@ Then, load all of the necessary packages into your session.
 check <- require(pacman)
 if(check==FALSE) {install.packages('pacman')} else(rm(check))
 
-pacman::p_load(RHRV, tidyverse, here)
+pacman::p_load(RHRV, reticulate, here)
 
 ```
 
@@ -42,6 +45,8 @@ Next, you can load the `PhysioScript` functions by using `load()`.
 
 ```{r}
 
+## Check to see where your root directory is
+## Make sure it is inside of the project folder
 here()
 load(here('R/hrv_tutorial/PhysioScript.RData'))
 
@@ -49,31 +54,35 @@ load(here('R/hrv_tutorial/PhysioScript.RData'))
 
 You can then examine what each of these functions do by clicking on them. If you
 have the desire to clean your Global Environment you can remove all of the functions
-by running the command `rm(list=ls())`.
+by running the command `rm(list=ls())`, or all of them except specific ones by naming them
+explicitly to keep like so:
 
 ```{r}
 
-rm(list= ls()[!(ls() %in% c('process.ecg','extract.ibi'))])
+rm(list= ls()[!(ls() %in% c('process.ecg','extract.ibi', 'read.vars', 'read.data'))])
 
+```
+
+Lastly, we will be using some python code to read in the raw AcqKnowledge files. If you are familiar
+with python, and have `pip` installed on your system, you can execute the following command to get
+the necessary package.
+
+```{bash}
+pip install bioread
 ```
 
 
 ## Tutorial Overview
 
-1). Extracting electrophysiology data from raw files
+1). [Extracting electrophysiology data from raw files](extract_ecg.html)
 
-2). Prepare files and compute interbeat interval
+2). [Prepare files and compute interbeat interval (IBI)](compute_ibi.html)
 
-3). Check for outliers and graph
+3). [Check for outliers and graph](ecg_outliers.html)
 
-4). Obtain statistics
+4). [Dealing with triggers](hrv_triggers.html)
 
-5). Dealing with triggers
-
-6). Graphing
-
-
-
+5). [Obtain statistics](hrv_stats.html)
 
 
 

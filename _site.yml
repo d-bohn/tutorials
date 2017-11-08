@@ -10,8 +10,20 @@ navbar:
         - text: "R Tutorials"
         - text: "Analyzing Heart Rate Variability in R"
           href: hrv_tutorial.html
+        - text: "---------"
+        - text: "Extracting data"
+          href: extract_ecg.html
+        - text: "Computing interbeat interval"
+          href: compute_ibi.html
+        - text: "HRV outlier analysis"
+          href: ecg_outliers.html
+        - text: "Dealing with triggers"
+          href: hrv_triggers.html
+        - text: "HRV statistics"
+          href: hrv_stats.html
         - text: "Using Shiny for Psychological Research"
           href: shiny_tutorial.html
+        - text: "---------"
         - text: "---------"
         - text: "Additional Tutorials"
   right:
@@ -25,6 +37,6 @@ output_dir: "docs"
 output:
   html_document:
     theme: cosmo
-    highlight: textmate
+    highlight: tango
     include:
       after_body: footer.html

@@ -1,0 +1,27 @@
+---
+title: "Dealing with Triggers in ECG data"
+author: "Daniel N. Albohn"
+date: "11/08/2017"
+output: 
+  html_document:
+    theme: cosmo
+    css: style.css
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE, eval = FALSE)
+```
+
+Usually when we analyze HRV data, we are only interested in computing statistics for certain parts
+of the HRV time series. Usually a raw ECG file will have an additional channel that outputs a small
+electrical charge when certain events are happening. This is done in order to denote which parts of
+the sequence are important for analysis.
+
+```{r}
+source('R/hrv_tutorial/make_events.R')
+
+make_events('sub1101.RDS', 'data/hrv_tutorial')
+
+```

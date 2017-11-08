@@ -1,5 +1,9 @@
 ---
 title: "About the site"
+output: 
+  html_document:
+    theme: cosmo
+    css: style.css
 ---
 
 This site is generated in [R Markdown](http://rmarkdown.rstudio.com/) using [RStudio](http://rstudio.com).

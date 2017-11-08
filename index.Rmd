@@ -6,6 +6,4 @@ output:
     css: style.css
 ---
 
-
-
-Some text describing what this website is all about.
+Use the drop down menu above to select a tutorial.

@@ -20,24 +20,52 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
+
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
-}
-</script>
-
 
 
 <style type="text/css">
@@ -67,6 +95,7 @@ h6 {
 }
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 
 </head>
 
@@ -192,9 +221,26 @@ $(document).ready(function () {
     <li>
       <a href="hrv_tutorial.html">Analyzing Heart Rate Variability in R</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="extract_ecg.html">Extracting data</a>
+    </li>
+    <li>
+      <a href="compute_ibi.html">Computing interbeat interval</a>
+    </li>
+    <li>
+      <a href="ecg_outliers.html">HRV outlier analysis</a>
+    </li>
+    <li>
+      <a href="hrv_triggers.html">Dealing with triggers</a>
+    </li>
+    <li>
+      <a href="hrv_stats.html">HRV statistics</a>
+    </li>
     <li>
       <a href="shiny_tutorial.html">Using Shiny for Psychological Research</a>
     </li>
+    <li class="divider"></li>
     <li class="divider"></li>
     <li class="dropdown-header">Additional Tutorials</li>
   </ul>
@@ -231,10 +277,10 @@ $(document).ready(function () {
 
 <p>This site is generated in <a href="http://rmarkdown.rstudio.com/">R Markdown</a> using <a href="http://rstudio.com">RStudio</a>.</p>
 <p>The source code for this website can be found on <a href="https://github.com/d-bohn/tutorials">GitHub</a>.</p>
-<pre class="r"><code>sessionInfo()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
 <pre><code>## R version 3.4.1 (2017-06-30)
 ## Platform: x86_64-apple-darwin16.7.0 (64-bit)
-## Running under: macOS Sierra 10.12.5
+## Running under: macOS High Sierra 10.13
 ## 
 ## Matrix products: default
 ## BLAS: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
@@ -248,30 +294,31 @@ $(document).ready(function () {
 ## [8] base     
 ## 
 ## other attached packages:
-##  [1] here_0.1               dplyr_0.7.2            purrr_0.2.3           
-##  [4] readr_1.1.1            tidyr_0.7.1            tibble_1.3.4          
-##  [7] ggplot2_2.2.1          tidyverse_1.1.1        RHRV_4.2.3            
-## [10] lomb_1.0               nonlinearTseries_0.2.3 Rcpp_0.12.12          
-## [13] TSA_1.01               mgcv_1.8-17            nlme_3.1-131          
-## [16] locfit_1.5-9.1         leaps_3.0              tseries_0.10-42       
-## [19] rgl_0.98.1             Matrix_1.2-10          waveslim_1.7.5        
-## [22] tkrplot_0.0-23         pacman_0.4.6          
+##  [1] ggplot2_2.2.1          here_0.1               reticulate_1.2        
+##  [4] RHRV_4.2.3             lomb_1.0               nonlinearTseries_0.2.3
+##  [7] Rcpp_0.12.13           TSA_1.01               mgcv_1.8-22           
+## [10] nlme_3.1-131           locfit_1.5-9.1         leaps_3.0             
+## [13] tseries_0.10-42        rgl_0.98.1             Matrix_1.2-11         
+## [16] waveslim_1.7.5         tkrplot_0.0-23        
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] httr_1.3.1       jsonlite_1.5     modelr_0.1.1     shiny_1.0.5     
-##  [5] assertthat_0.2.0 TTR_0.23-2       cellranger_1.1.0 yaml_2.1.14     
-##  [9] backports_1.1.0  lattice_0.20-35  glue_1.1.1       quadprog_1.5-5  
-## [13] digest_0.6.12    rvest_0.3.2      colorspace_1.3-2 htmltools_0.3.6 
-## [17] httpuv_1.3.5     plyr_1.8.4       psych_1.7.5      pkgconfig_2.0.1 
-## [21] broom_0.4.2      haven_1.1.0      xtable_1.8-2     scales_0.5.0    
-## [25] lazyeval_0.2.0   quantmod_0.4-10  mnormt_1.5-5     magrittr_1.5    
-## [29] readxl_1.0.0     mime_0.5         evaluate_0.10.1  xml2_1.1.1      
-## [33] forcats_0.2.0    xts_0.10-0       foreign_0.8-69   tools_3.4.1     
-## [37] hms_0.3          stringr_1.2.0    munsell_0.4.3    bindrcpp_0.2    
-## [41] compiler_3.4.1   rlang_0.1.2      grid_3.4.1       htmlwidgets_0.9 
-## [45] rmarkdown_1.6    gtable_0.2.0     curl_2.8.1       reshape2_1.4.2  
-## [49] R6_2.2.2         zoo_1.8-0        lubridate_1.6.0  knitr_1.17      
-## [53] bindr_0.1        rprojroot_1.2    stringi_1.1.5    parallel_3.4.1</code></pre>
+##  [1] lattice_0.20-35     zoo_1.8-0           revealjs_0.9       
+##  [4] rprojroot_1.2       digest_0.6.12       lmtest_0.9-35      
+##  [7] mime_0.5            R6_2.2.2            plyr_1.8.4         
+## [10] backports_1.1.1     evaluate_0.10.1     rlang_0.1.2        
+## [13] lazyeval_0.2.0      curl_3.0            data.table_1.10.4-2
+## [16] fracdiff_1.4-2      TTR_0.23-2          rmarkdown_1.6      
+## [19] labeling_0.3        readr_1.1.1         stringr_1.2.0      
+## [22] htmlwidgets_0.9     munsell_0.4.3       shiny_1.0.5        
+## [25] compiler_3.4.1      httpuv_1.3.5        forecast_8.2       
+## [28] htmltools_0.3.6     nnet_7.3-12         tibble_1.3.4       
+## [31] gridExtra_2.3       quadprog_1.5-5      grid_3.4.1         
+## [34] jsonlite_1.5        xtable_1.8-2        gtable_0.2.0       
+## [37] pacman_0.4.6        magrittr_1.5        scales_0.5.0       
+## [40] quantmod_0.4-11     stringi_1.1.5       timeDate_3012.100  
+## [43] xts_0.10-0          tools_3.4.1         purrr_0.2.4        
+## [46] hms_0.3             rsconnect_0.8.5     parallel_3.4.1     
+## [49] yaml_2.1.14         colorspace_1.3-2    knitr_1.17</code></pre>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>
 

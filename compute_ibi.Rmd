@@ -1,0 +1,54 @@
+---
+title: "Computing IBI Series"
+author: "Daniel N. Albohn"
+date: "11/08/2017"
+output: 
+  html_document:
+    theme: cosmo
+    css: style.css
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE, eval = FALSE)
+```
+
+# Preparing file for IBI extraction
+We are going to use the `physioscripts` suite of functions to use peak signal detection
+and compute the IBI series. In order to use the built-in signal detection utilities in
+this suite of functions, each participant needs a few additional files to tell the program
+how to handle the raw data. The `phys_file()` and `phys_info()` functions helper functions
+I wrote to put the raw ECG signal into a format that the automatic R peak detection
+algorithm (from the `physioscripts` package) is expecting.
+
+```{r prep_ibi, eval = FALSE}
+source('R/hrv_tutorial/physio_functions.R')
+
+df <- readRDS(data, file = 'data/hrv_tutorial/sub1101a.RDS')
+
+# create and write each new ecg file and event file
+phys_file(df, c('time','ecg'), 'data/hrv_tutorial/sub1101')
+phys_info('sub1101', 'data/hrv_tutorial/', fs = 1000, origin = NA)
+```
+
+Now, we can pass the `.phys.csv` file to the process and extract functions.
+
+```{r}
+files <- list.files('data/hrv_tutorial/', pattern = 'phys.csv', full.names = TRUE)
+
+process.ecg(in.file.list = files, processing.mode = "batch")
+
+extract.ibi(in.file.list = files, processing.mode = "batch")
+```
+
+Let's take a look at the ibi file that was created:
+
+```{r eval=TRUE}
+head(read.csv('data/hrv_tutorial/sub1101.phys.csv'))
+
+head(read.csv('data/hrv_tutorial/sub1101.ibi.gz'))
+```
+
+
+

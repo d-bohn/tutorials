@@ -1,0 +1,50 @@
+---
+title: "HRV Analysis in R"
+subtitle: "A Quick Tutorial"
+author: "Daniel N. Albohn"
+date: "11/8/2017"
+output:
+  ioslides_presentation:
+    incremental: no
+    transition: faster
+    widescreen: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Heart Rate Variablility
+
+- Autonomic nervous system regulates the heart
+- HRV: Variation in time between heartbeats
+- A healthy heart is not a metronome
+
+## Heart Rate Variablility {.flexbox .vcenter}
+<center><img src="../img/ibi.png"/></center>
+
+## The QRS complex {.flexbox .vcenter}
+
+<center><img src="../img/qrs.png" height = "400px" /></center>
+
+Denotes peaks and valleys in heart beat
+
+## The QRS complex
+- Most HRV analyses presume that the time series has been annotated
+- From there, multiple analyses are possible
+- But how do we get this annotation?!
+
+## Why should neuroscientists care?
+
+- HRV can be used as a control in MRI analysis
+- Brain areas linked to heart control (e.g., prefrontal cortex)
+
+## Why should neuroscientists care? {.flexbox .vcenter}
+<center><img src="../img/heart-brain-connection.png" height = "398px" /></center>
+
+## Rationale
+- Existing programs suck
+    + Outdated interfaces
+    + Require lots of human interaction
+- Should be automated to a higher a degree
+- [bit.ly/R_tutorials](http://www.bit.ly/R_tutorials)
