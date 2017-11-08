@@ -25,7 +25,11 @@ navbar:
         - text: "Overview and introduction"
           href: shiny_tutorial.html
         - text: "---------"
-    - text: "Additional Tutorials"
+    - text: "Additional Tutorials and Resources"
+      icon: fa-compass
+      menu:
+        - text: "PSU Graduate Student Resources"
+        - href: https://psu-psychology.github.io/Psych-Grad-Resources/
   right:
     - text: "About"
       href: about.html
