@@ -220,10 +220,10 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">R Tutorials</li>
+    <li class="dropdown-header">Analyzing Heart Rate Variability in R</li>
     <li>
-      <a href="hrv_tutorial.html">Analyzing Heart Rate Variability in R</a>
+      <a href="hrv_tutorial.html">Overview of HRV and tutorial</a>
     </li>
-    <li class="divider"></li>
     <li>
       <a href="extract_ecg.html">Extracting data</a>
     </li>
@@ -239,10 +239,10 @@ $(document).ready(function () {
     <li>
       <a href="hrv_stats.html">HRV statistics</a>
     </li>
+    <li class="divider"></li>
     <li>
       <a href="shiny_tutorial.html">Using Shiny for Psychological Research</a>
     </li>
-    <li class="divider"></li>
     <li class="divider"></li>
     <li class="dropdown-header">Additional Tutorials</li>
   </ul>
@@ -283,6 +283,57 @@ $(document).ready(function () {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&#39;R/hrv_tutorial/make_events.R&#39;</span>)
 
 <span class="kw">make_events</span>(<span class="st">&#39;sub1101.RDS&#39;</span>, <span class="st">&#39;data/hrv_tutorial&#39;</span>)</code></pre></div>
+<p>If we examine the source code for the <code>make_events()</code> function, we can see that there are a few things we can tweak, if need be:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">make_events &lt;-<span class="st"> </span><span class="cf">function</span>(file, path){
+  wd &lt;-<span class="st"> </span><span class="kw">getwd</span>()
+  <span class="kw">setwd</span>(path)
+  name &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;*.RDS&quot;</span>, <span class="st">&quot;&quot;</span>, file)
+  events &lt;-<span class="st"> </span><span class="kw">readRDS</span>(file)[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]
+  
+  <span class="co"># Set value variable</span>
+  <span class="co">#colnames(events)[1] &lt;- &quot;Value&quot;</span>
+  
+  <span class="co"># Make InitTime variable</span>
+  op &lt;-<span class="st"> </span><span class="kw">options</span>(<span class="dt">digits.secs=</span><span class="dv">3</span>)
+  <span class="co">#events$InitTime &lt;- format( (as.POSIXct(Sys.Date())+events$`Time(ms)`/1000)-72000, &quot;%H:%M:%OS&quot;)</span>
+  events<span class="op">$</span>InitTime &lt;-<span class="st"> </span>events<span class="op">$</span>time
+  
+  <span class="co"># Make type variable</span>
+  values &lt;-<span class="st"> </span><span class="kw">unique</span>(events<span class="op">$</span>trigger)
+  condition &lt;-<span class="st"> </span><span class="ot">NULL</span>
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(values)){
+    condition[[i]] &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&#39;event_type_&#39;</span>, values[[i]])
+    }
+  duration &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">10</span>, <span class="kw">length</span>(values))
+  
+  match &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(values, condition, duration)
+  
+  events<span class="op">$</span>Type1 &lt;-<span class="st"> </span><span class="kw">match</span>(events<span class="op">$</span>trigger,match<span class="op">$</span>values)
+  events<span class="op">$</span>Type &lt;-<span class="st"> </span>match[events<span class="op">$</span>Type1,<span class="dv">2</span>]
+  events<span class="op">$</span>Duration &lt;-<span class="st"> </span>match[events<span class="op">$</span>Type1,<span class="dv">3</span>]
+  
+  <span class="co"># Reorder and save</span>
+  <span class="co"># events &lt;- events[c(3,5,6,1,2,4)]</span>
+  <span class="co"># events &lt;- events[,c(-5,-6)]</span>
+  events &lt;-<span class="st"> </span>events[<span class="kw">complete.cases</span>(events<span class="op">$</span>Type),]
+  events &lt;-<span class="st"> </span>events[<span class="op">!</span><span class="kw">rev</span>(<span class="kw">duplicated</span>(<span class="kw">rev</span>(events<span class="op">$</span>Type))),]
+  
+  InitTime &lt;-<span class="st"> </span>events<span class="op">$</span>InitTime
+  Type &lt;-<span class="st"> </span>events<span class="op">$</span>Type
+  Duration &lt;-<span class="st"> </span>events<span class="op">$</span>Duration
+  Value &lt;-<span class="st"> </span>events<span class="op">$</span>trigger
+  
+  <span class="co">#rm(events,match,condition,duration,Duration,file,InitTime,op,path,Type,Value,values)</span>
+  
+ episodes &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">InitTime=</span>InitTime,<span class="dt">Type=</span>Type,<span class="dt">Duration=</span>Duration,<span class="dt">Value=</span>Value)
+  
+ <span class="kw">save</span>(episodes, <span class="dt">file =</span> <span class="kw">paste0</span>(name,<span class="st">&quot;_trigger.RData&quot;</span>))
+  
+  <span class="co"># Clean up</span>
+  <span class="co">#rm(match,condition,op,values,duration)</span>
+  <span class="kw">setwd</span>(wd)
+  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())
+}</code></pre></div>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>
 
