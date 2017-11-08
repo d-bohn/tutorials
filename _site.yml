@@ -4,10 +4,9 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "Tutorials"
+    - text: "R Tutorials"
       icon: fa-cog
       menu:
-        - text: "R Tutorials"
         - text: "Analyzing Heart Rate Variability in R"
         - text: "Overview and introduction"
           href: hrv_tutorial.html
@@ -26,7 +25,7 @@ navbar:
         - text: "Overview and introduction"
           href: shiny_tutorial.html
         - text: "---------"
-        - text: "Additional Tutorials"
+    - text: "Additional Tutorials"
   right:
     - text: "About"
       href: about.html
