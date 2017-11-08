@@ -9,8 +9,8 @@ navbar:
       menu:
         - text: "R Tutorials"
         - text: "Analyzing Heart Rate Variability in R"
+        - text: "Overview of HRV and tutorial"
           href: hrv_tutorial.html
-        - text: "---------"
         - text: "Extracting data"
           href: extract_ecg.html
         - text: "Computing interbeat interval"
@@ -21,9 +21,9 @@ navbar:
           href: hrv_triggers.html
         - text: "HRV statistics"
           href: hrv_stats.html
+        - text: "---------"
         - text: "Using Shiny for Psychological Research"
           href: shiny_tutorial.html
-        - text: "---------"
         - text: "---------"
         - text: "Additional Tutorials"
   right:
