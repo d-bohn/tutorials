@@ -1,2 +1,2 @@
 # tutorials
-Source code for tutorials
+Source code for [tutorials](bit.ly/R_tutorials)
