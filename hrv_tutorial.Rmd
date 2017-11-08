@@ -74,6 +74,8 @@ pip install bioread
 
 ## Tutorial Overview
 
+This brief tutorial will consist of the following topics:
+
 1). [Extracting electrophysiology data from raw files](extract_ecg.html)
 
 2). [Prepare files and compute interbeat interval (IBI)](compute_ibi.html)
@@ -84,5 +86,6 @@ pip install bioread
 
 5). [Obtain statistics](hrv_stats.html)
 
-
+You can navigate to the appropriate section by clicking the links above or using
+the dropdown menu at the top of the page.
 

@@ -9,7 +9,7 @@ navbar:
       menu:
         - text: "R Tutorials"
         - text: "Analyzing Heart Rate Variability in R"
-        - text: "Overview of HRV and tutorial"
+        - text: "Overview and introduction"
           href: hrv_tutorial.html
         - text: "Extracting data"
           href: extract_ecg.html
@@ -23,6 +23,7 @@ navbar:
           href: hrv_stats.html
         - text: "---------"
         - text: "Using Shiny for Psychological Research"
+        - text: "Overview and introduction"
           href: shiny_tutorial.html
         - text: "---------"
         - text: "Additional Tutorials"
