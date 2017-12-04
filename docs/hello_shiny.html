@@ -13,7 +13,7 @@
 
 <meta name="date" content="2017-12-06" />
 
-<title>Using Shiny for Research</title>
+<title>Hello, Shiny! Part I</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -286,37 +286,91 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Using Shiny for Research</h1>
+<h1 class="title toc-ignore">Hello, Shiny! Part I</h1>
 <h4 class="author"><em>Daniel N. Albohn</em></h4>
 <h4 class="date"><em>12/06/2017</em></h4>
 
 </div>
 
 
-<div id="overview" class="section level1">
-<h1>Overview</h1>
-<div id="what-is-this-shiny-you-speak-of" class="section level2">
-<h2>What is this Shiny you speak of?</h2>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The goal of this tutorial is to orient you to the different parts of a shiny app, how each section is structured</p>
+</div>
+<div id="hello-shiny-what-makes-you-special" class="section level1">
+<h1>Hello, Shiny! What makes you special?</h1>
+<div id="shiny-ui-and-server" class="section level2">
+<h2>Shiny UI and Server</h2>
+<p>Each shiny app consists of a <code>UI</code> (user interface), or what the person actually sees on the screen, and a <code>server</code>, or how each app should be run. In older versions of shiny, these had to be seperate, consisting of a <code>UI.R</code> and a <code>server.R</code> files. Since shiny v0.10.2, these can now be combined into a single file, <code>app.R</code>. All <code>app.R</code> files will consist of the following structure:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
+
+ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+  ## Build what the person sees in the app here
+)
+
+server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {
+  ## Build how the app should react to the user/page here
+}</code></pre></div>
+<p>Each shiny applications ends with a call to let R know that this is an interactive shiny document with a UI and server. Just add <code>shiny::shinyApp(ui=ui, server=server)</code> to the end of the <code>app.R</code> script.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
+
+ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+  ## Build what the person sees in the app here
+)
+
+server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {
+  ## Build how the app should react to the user/page here
+}
+
+shiny<span class="op">::</span><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</code></pre></div>
+</div>
+<div id="running-the-app" class="section level2">
+<h2>Running the app</h2>
+<p>After you save the document as <code>app.R</code>, and if you are using RStuido, you should see a button in the top right corner to run the app.</p>
+<div class="figure">
+<img src="img/run_app.png" />
+
+</div>
+<p>Clicking this starts the app locally. This approach to running the app is good for debugging and checking how any changes effected your app immediately.</p>
+<p><strong>A caveat</strong>: Because shiny only recognizes certain file names (<code>UI.R</code>, <code>server.R</code>, and <code>app.R</code>), each new shiny application needs to be in its own directory. You can run an app from outside an interactive session by pointing shiny to the directory that the app is contained in:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
+<span class="kw">runApp</span>(<span class="st">&quot;R/shiny_tutorial/hello_shiny/&quot;</span>)</code></pre></div>
 </div>
 </div>
-<div id="preparation" class="section level1">
-<h1>Preparation</h1>
-<p>Throughout this tutorial, we will be using several core packagesto build each of the applications. You can check to see if you already have them downloaded, and if not install them by running the code below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">&quot;pacman&quot;</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;pacman&quot;</span>)
-pacman<span class="op">::</span><span class="kw">p_load</span>(tidyverse, shiny, shinyjs)</code></pre></div>
-<p>The code checks to see if the package <code>pacman</code> is installed, and if not, installs it. <code>pacman</code> is a useful package manager/loader that quickly checks if a package is installed, installs it if need be, and then loads it.</p>
-<p>The main packages we are going to deal with are:</p>
-<ul>
-<li><p><code>shiny</code>: the base package, from which most of the shiny architecture is built on.</p></li>
-<li><p><code>shinyjs</code>: A Javascript library for shiny; allows for some more complex functions and additions to shiny.</p></li>
-</ul>
+<div id="hello-shiny-how-do-i-build-you" class="section level1">
+<h1>Hello, shiny! How do I build you?</h1>
+<p>Even though both the UI and the server are in one file, for the purposes of this first walkthrough I am going to break them down into their seperate components. Just know that both of them should exist in the same <code>app.R</code> file.</p>
+<div id="user-interface" class="section level2">
+<h2>User Interface</h2>
+<p>The first thing we want to define is a page. The <code>fluidPage()</code> argument is nice because it automatically defines the boundaries of the page based on the dimensions current computer screen, and if the user changes the size of the window.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+
+)</code></pre></div>
+<p>We can’t run this app yet because we don’t have a server function defined yet. even if we did, it would just be a blank page. To add <em>something</em> to the page, we can simply just stick a header/title at the top:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+  <span class="kw">titlePanel</span>(<span class="st">&quot;This is my first shiny app!&quot;</span>)
+)</code></pre></div>
+<p><strong>Caveat</strong>: Most shiny functions are “Camel Case”, meaning that the second word in a two-word function is capitalized (e.g., <code>fluidPage()</code>, <code>titlePanel()</code>).</p>
 </div>
-<div id="table-of-contents" class="section level1">
-<h1>Table of Contents</h1>
-<p>1). Hello, Shiny! - <a href="hello_shiny.html">Part I</a> - Basic shiny components - <a href="hello_shinyII.html">Part II</a> - Making my first app a bit more personal</p>
-<p>2). Hello, interactive programming! - A simple user file input, summary output app</p>
-<p>3). Hello, survey! - Creating and distrbuting surveys in Shiny</p>
-<p>4). Beyond a simple introduction</p>
+<div id="the-server" class="section level2">
+<h2>The Server</h2>
+<p>If you want to test your new creation yourself, define what the server should do (in this case nothing) by pasting the following code underneath the <code>UI</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {
+  ## Build how the app should react to the user/page here
+}
+
+shiny<span class="op">::</span><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</code></pre></div>
+<p>Then hit the ‘Run app’ icon. you should see your new app pop up in a new window. It should look like the following:</p>
+<div class="figure">
+<img src="img/hello_shiny1.png" />
+
+</div>
+</div>
+<div id="shiny-gets-personal" class="section level2">
+<h2>Shiny Gets Personal</h2>
+<p>Continue to part II of this tutorial where we will take this very basic app and make it more personal by asking the user for input, and supplying output based on it!</p>
+<p><a href="hello_shinyII.html">CONTINUE TO PART II</a></p>
+</div>
 </div>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>

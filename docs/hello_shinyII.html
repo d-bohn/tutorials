@@ -13,7 +13,7 @@
 
 <meta name="date" content="2017-12-06" />
 
-<title>Using Shiny for Research</title>
+<title>Hello, Shiny! Part II</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,49 +25,6 @@
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
 <style type="text/css">
@@ -286,37 +243,15 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Using Shiny for Research</h1>
+<h1 class="title toc-ignore">Hello, Shiny! Part II</h1>
 <h4 class="author"><em>Daniel N. Albohn</em></h4>
 <h4 class="date"><em>12/06/2017</em></h4>
 
 </div>
 
 
-<div id="overview" class="section level1">
-<h1>Overview</h1>
-<div id="what-is-this-shiny-you-speak-of" class="section level2">
-<h2>What is this Shiny you speak of?</h2>
-</div>
-</div>
-<div id="preparation" class="section level1">
-<h1>Preparation</h1>
-<p>Throughout this tutorial, we will be using several core packagesto build each of the applications. You can check to see if you already have them downloaded, and if not install them by running the code below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">&quot;pacman&quot;</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;pacman&quot;</span>)
-pacman<span class="op">::</span><span class="kw">p_load</span>(tidyverse, shiny, shinyjs)</code></pre></div>
-<p>The code checks to see if the package <code>pacman</code> is installed, and if not, installs it. <code>pacman</code> is a useful package manager/loader that quickly checks if a package is installed, installs it if need be, and then loads it.</p>
-<p>The main packages we are going to deal with are:</p>
-<ul>
-<li><p><code>shiny</code>: the base package, from which most of the shiny architecture is built on.</p></li>
-<li><p><code>shinyjs</code>: A Javascript library for shiny; allows for some more complex functions and additions to shiny.</p></li>
-</ul>
-</div>
-<div id="table-of-contents" class="section level1">
-<h1>Table of Contents</h1>
-<p>1). Hello, Shiny! - <a href="hello_shiny.html">Part I</a> - Basic shiny components - <a href="hello_shinyII.html">Part II</a> - Making my first app a bit more personal</p>
-<p>2). Hello, interactive programming! - A simple user file input, summary output app</p>
-<p>3). Hello, survey! - Creating and distrbuting surveys in Shiny</p>
-<p>4). Beyond a simple introduction</p>
+<div id="shiny-gets-personal" class="section level1">
+<h1>Shiny Gets Personal</h1>
 </div>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>
