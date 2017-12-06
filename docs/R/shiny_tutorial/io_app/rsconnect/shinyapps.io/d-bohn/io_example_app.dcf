@@ -1,0 +1,12 @@
+name: io_example_app
+title: io_example_app
+username:
+account: d-bohn
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 244938
+bundleId: 1118003
+url: https://d-bohn.shinyapps.io/io_example_app/
+when: 1512530496.49313
+asMultiple: FALSE
+asStatic: FALSE

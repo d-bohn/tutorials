@@ -10,4 +10,10 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Who am I?
+A website for various curated tutorials and resources.
+
+Current maintainer: 
+
+[Daniel Albohn](http://www.sites.psu.edu/albohn)  
+Email: dna5021@psu.edu  
+GitHub: [www.github.com/d-bohn](http://www.github.com/d-bohn)

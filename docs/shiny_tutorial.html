@@ -239,9 +239,25 @@ $(document).ready(function () {
       <a href="hrv_stats.html">HRV statistics</a>
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">Using Shiny for Psychological Research</li>
+    <li class="dropdown-header">Using shiny for Psychological Research</li>
     <li>
       <a href="shiny_tutorial.html">Overview and introduction</a>
+    </li>
+    <li class="dropdown-header">My first shiny app</li>
+    <li>
+      <a href="hello_shiny.html">Hello, shiny! Part I</a>
+    </li>
+    <li>
+      <a href="hello_shinyII.html">Hello, shiny! Part II</a>
+    </li>
+    <li>
+      <a href="io_app.html">Making shiny app more interactive</a>
+    </li>
+    <li>
+      <a href="simple_shiny_survey.html">Simple shiny survey</a>
+    </li>
+    <li>
+      <a href="beyond_hello.html">Additional shiny resources</a>
     </li>
     <li class="divider"></li>
   </ul>
@@ -255,9 +271,8 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">PSU Graduate Student Resources</li>
     <li>
-      <a href="http://bit.ly/psych_grad_resources"></a>
+      <a href="http://bit.ly/psych_grad_resources">PSU Graduate Student Resources</a>
     </li>
   </ul>
 </li>
@@ -295,28 +310,44 @@ $(document).ready(function () {
 
 <div id="overview" class="section level1">
 <h1>Overview</h1>
+<p>This group of tutorials is meant to be a <em>brief</em> and <em>gentle</em> introduction to <code>shiny</code>.</p>
+<p>Fair warning: If you have experience with the <code>shiny</code> package or any web development, this tutorial is probably not for you. Rstudio has several more advanced topics for programming with shiny. In addition, <a href="https://github.com/daattali/advanced-shiny">Dean Attali</a> has a nice curated list of shiny topics. Check out the <a href="beyond_hello.html">resources page</a> for more info.</p>
 <div id="what-is-this-shiny-you-speak-of" class="section level2">
-<h2>What is this Shiny you speak of?</h2>
+<h2>What is this “Shiny” you speak of?</h2>
+<p><code>shiny</code> is an <code>R</code> package by RStudio that allows for the creation of interactive “web apps”. Web apps is quoted because shiny apps need not be deployed on the web, nor do they have to be “apps” in the sense that they require some interactive/reactive content.</p>
+<p>A shiny app written using shiny syntax is really just a wrapper around a lot of HTML, CSS, and JavaScript code. The benefit to using the <code>shiny</code> package as opposed to standalone HTML is two-fold: First, the shiny syntax should be (more) familiar to long-term <code>R</code> users, and two, it is relatively easy and plays nicely with <code>R</code>.</p>
+<p>Even if you know HTML, JavaScript, or CSS, the raw power of these programming languages can easily be incorporated into a shiny application. We will see some very basic HTML code in this tutorial, but for more integration check out the page on <a href="beyond_hello.html">extending</a> shiny beyond this introduction.</p>
 </div>
 </div>
 <div id="preparation" class="section level1">
 <h1>Preparation</h1>
-<p>Throughout this tutorial, we will be using several core packagesto build each of the applications. You can check to see if you already have them downloaded, and if not install them by running the code below:</p>
+<p>Throughout this tutorial we will be using several core packages to build each of the applications. You can check to see if you already have them downloaded, and if not install them by running the code below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">&quot;pacman&quot;</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;pacman&quot;</span>)
 pacman<span class="op">::</span><span class="kw">p_load</span>(tidyverse, shiny, shinyjs)</code></pre></div>
 <p>The code checks to see if the package <code>pacman</code> is installed, and if not, installs it. <code>pacman</code> is a useful package manager/loader that quickly checks if a package is installed, installs it if need be, and then loads it.</p>
 <p>The main packages we are going to deal with are:</p>
 <ul>
 <li><p><code>shiny</code>: the base package, from which most of the shiny architecture is built on.</p></li>
-<li><p><code>shinyjs</code>: A Javascript library for shiny; allows for some more complex functions and additions to shiny.</p></li>
+<li><p><code>shinyjs</code>: A JavaScript library for shiny; allows for some more complex functions and additions to shiny.</p></li>
 </ul>
+<p>Feel free to clone the whole site repo on <a href="https://github.com/d-bohn/tutorials">GitHub</a>, or download a standalone <a href="https://psu.box.com/s/xsevf3t7e43sz4ry9mttrnqjqk0k48hz">zip file</a> with all of the necessary code.</p>
 </div>
 <div id="table-of-contents" class="section level1">
 <h1>Table of Contents</h1>
-<p>1). Hello, Shiny! - <a href="hello_shiny.html">Part I</a> - Basic shiny components - <a href="hello_shinyII.html">Part II</a> - Making my first app a bit more personal</p>
-<p>2). Hello, interactive programming! - A simple user file input, summary output app</p>
-<p>3). Hello, survey! - Creating and distrbuting surveys in Shiny</p>
-<p>4). Beyond a simple introduction</p>
+<p>1). Hello, shiny!</p>
+<ul>
+<li><a href="hello_shiny.html">Part I</a> - Basic shiny components</li>
+<li><a href="hello_shinyII.html">Part II</a> - Making my first app a bit more personal</li>
+</ul>
+<p>2). Hello, interactive applications! - A simple user file input, summary output app</p>
+<ul>
+<li><a href="io_app.html">Intermediate example</a></li>
+</ul>
+<p>3). Hello, survey! - Creating a simple survey in shiny</p>
+<ul>
+<li><a href="simple_shiny_survey.html">Example</a></li>
+</ul>
+<p>3). <a href="beyond_hello.html">Beyond a simple introduction</a></p>
 </div>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>

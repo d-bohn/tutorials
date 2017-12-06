@@ -21,15 +21,26 @@ navbar:
         - text: "HRV statistics"
           href: hrv_stats.html
         - text: "---------"
-        - text: "Using Shiny for Psychological Research"
+        - text: "Using shiny for Psychological Research"
         - text: "Overview and introduction"
           href: shiny_tutorial.html
+        - text: "My first shiny app"
+        - text: "Hello, shiny! Part I"
+          href: hello_shiny.html
+        - text: "Hello, shiny! Part II"
+          href: hello_shinyII.html
+        - text: "Making shiny app more interactive"
+          href: io_app.html
+        - text: "Simple shiny survey"
+          href: simple_shiny_survey.html
+        - text: "Additional shiny resources"
+          href: beyond_hello.html
         - text: "---------"
     - text: "Additional Resources"
       icon: fa-compass
       menu:
         - text: "PSU Graduate Student Resources"
-        - href: http://bit.ly/psych_grad_resources
+          href: http://bit.ly/psych_grad_resources
   right:
     - text: "About"
       href: about.html

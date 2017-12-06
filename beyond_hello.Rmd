@@ -1,0 +1,45 @@
+---
+title: "Extending Shiny Beyond this Introduction"
+author: "Daniel N. Albohn"
+date: "12/06/2017"
+output: 
+  html_document:
+    theme: cosmo
+    css: style.css
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Advanced shiny tutorials
+- [Dean Attali's Advanced Shiny, Tips, and Tricks](https://github.com/daattali/advanced-shiny)
+- [RStudio Video Tutorials](https://shiny.rstudio.com/tutorial/)
+- [Shiny Widgets](https://shiny.rstudio.com/gallery/widget-gallery.html)
+- [Shiny Gadgets](https://shiny.rstudio.com/articles/gadgets.html)
+- [Interactive Plots](https://shiny.rstudio.com/articles/plot-interaction-advanced.html)
+- [Persistant Data Storage for shiny apps](https://shiny.rstudio.com/articles/persistent-data-storage.html)
+
+# Advanced shiny topics
+- [Shiny dashbaords I](http://rstudio.github.io/shinydashboard/)
+- [Shiny dashbaords II](https://shiny.rstudio.com/articles/dashboards.html)
+- [shinyjs](https://deanattali.com/shinyjs/) - JavaScript in shiny
+
+# Some of my favorite advanced shiny projects
+- [File Converter](https://gallery.shinyapps.io/rioweb/)
+- [Learning Linear Regression Diagnostics](https://gallery.shinyapps.io/slr_diag/)
+- [Learning Central Limit Theorem](https://gallery.shinyapps.io/CLT_prop/)
+- [Colour picker addin](https://github.com/daattali/colourpicker)
+- [Learn ggplot2 with ggplotAssist](https://github.com/cardiomoon/ggplotAssist)
+- [merTools](https://www.jaredknowles.com/journal/2015/8/12/announcing-mertools) - Explore multilevel models
+- [shinyStan](http://andrewgelman.com/2015/03/02/introducing-shinystan/) - Explore RStan models
+- [writemycongress](http://www.writemycongress.com/)
+
+# Deploying Shiny Apps 
+- [shinyapps.io](https://shinyapps.io)
+
+# Explore Yourself!
+- [User-Submitted shiny apps](https://www.showmeshiny.com/)
+- [RStudio's shiny webpage](https://shiny.rstudio.com/)

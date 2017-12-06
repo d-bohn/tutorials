@@ -25,6 +25,49 @@
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -196,9 +239,25 @@ $(document).ready(function () {
       <a href="hrv_stats.html">HRV statistics</a>
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">Using Shiny for Psychological Research</li>
+    <li class="dropdown-header">Using shiny for Psychological Research</li>
     <li>
       <a href="shiny_tutorial.html">Overview and introduction</a>
+    </li>
+    <li class="dropdown-header">My first shiny app</li>
+    <li>
+      <a href="hello_shiny.html">Hello, shiny! Part I</a>
+    </li>
+    <li>
+      <a href="hello_shinyII.html">Hello, shiny! Part II</a>
+    </li>
+    <li>
+      <a href="io_app.html">Making shiny app more interactive</a>
+    </li>
+    <li>
+      <a href="simple_shiny_survey.html">Simple shiny survey</a>
+    </li>
+    <li>
+      <a href="beyond_hello.html">Additional shiny resources</a>
     </li>
     <li class="divider"></li>
   </ul>
@@ -212,9 +271,8 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">PSU Graduate Student Resources</li>
     <li>
-      <a href="http://bit.ly/psych_grad_resources"></a>
+      <a href="http://bit.ly/psych_grad_resources">PSU Graduate Student Resources</a>
     </li>
   </ul>
 </li>
@@ -252,6 +310,168 @@ $(document).ready(function () {
 
 <div id="shiny-gets-personal" class="section level1">
 <h1>Shiny Gets Personal</h1>
+<p>In this section, we will make our shiny app a little more personal by having the user provide some input that will change the output within the app. We will start simple by having the user provide their name so that a personalized message appears.</p>
+<p>More specifically, let’s try and build an app that a user is prompted to input their name, confirm via button press, and have the output greet them by their name.</p>
+</div>
+<div id="app-layouts" class="section level1">
+<h1>App Layouts</h1>
+<p>Up until now, we have just been placing headers and text on the app. This is fine if you want a simple, left-aligned app that consists of pure text and images. But, once you start adding more complex features, understanding how an app is laid out on the page can make or break the user experience. There are several convenient and popular layouts that shiny uses:</p>
+<ul>
+<li><p><code>sidebarLayout()</code>: Provides a smaller sidebar (defaults to the left) and a larger area next to it</p></li>
+<li><p><code>fluidRow()</code> (grid layout): Provides an easy way to subset a page into rows and columns using <code>column()</code> within the argument</p></li>
+<li><p><code>tabsetPanel()</code>: Allows for multiple sub-divided panels within a larger panel</p></li>
+</ul>
+<p>You can see all types layouts in the <a href="https://shiny.rstudio.com/articles/layout-guide.html">shiny documentation online</a>. However, be aware that this documentation is slightly outdated.</p>
+<p>For this tutorial, we will stick with the simple/standard <code>sidebarLayout()</code>. Let’s update our shiny app to have a side-panel.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+  ## This should look familar
+  <span class="kw">titlePanel</span>(<span class="st">&quot;This is my first shiny app!&quot;</span>),
+  ## This is new!
+  <span class="kw">sidebarLayout</span>(<span class="kw">sidebarPanel</span>(),
+                <span class="kw">mainPanel</span>(),
+                <span class="dt">position =</span> <span class="st">&#39;left&#39;</span>,
+                <span class="dt">fluid =</span> <span class="ot">TRUE</span>)
+)</code></pre></div>
+<p>When we run our app now, we should see our lovely exclamation that this is our first shiny app, along with a demarcated subsection to the left, and a larger main panel to the right:</p>
+<div class="figure">
+<img src="img/hello_shiny3.png" />
+
+</div>
+<p>Notice how–like a lot of non-tidyverse R–we are nesting arguments within each other. That is, we are starting with the most broad object (the page itself), then move to a subsections of the page (the title and layout), etc…</p>
+<p><strong>Cateat</strong>: Order matters. Try switching the order of <code>titlePanel()</code> with <code>sidebarLayout()</code> and see what happens.</p>
+</div>
+<div id="user-interface-redefined" class="section level1">
+<h1>User Interface Redefined</h1>
+<div id="user-inputs" class="section level2">
+<h2>User Inputs</h2>
+<p>Now that we have our app layout setup the way we want, we can begin to construct the reactive elements. Our first step is to provide some way for users to input some sort of text. Fortunately, shiny provides several common input/output <a href="http://shiny.rstudio.com/reference/shiny/latest/">functions</a>.</p>
+<p>Here, we add a <code>textInput()</code> function to the side-panel. There are many types of inputs that are included in the base version of <code>shiny</code>, such as <code>numericInput()</code>, <code>sliderInput()</code>, <code>radioButtons()</code> to name but a few.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+  ## This should look familar
+  <span class="kw">titlePanel</span>(<span class="st">&quot;This is my first shiny app!&quot;</span>),
+  ## This is new!
+  <span class="kw">sidebarLayout</span>(<span class="kw">sidebarPanel</span>(
+    <span class="kw">textInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">h5</span>(<span class="st">&quot;What is your name?&quot;</span>), <span class="dt">placeholder =</span> <span class="st">&quot;Enter text...&quot;</span>)
+  ),
+                <span class="kw">mainPanel</span>(),
+                <span class="dt">position =</span> <span class="st">&#39;left&#39;</span>,
+                <span class="dt">fluid =</span> <span class="ot">TRUE</span>)
+)</code></pre></div>
+<p>The first argument in <code>textInput()</code>, <code>inputId</code> can be thought of as the variable name that the text will be saved as. When we want to access this variable, we will call is by this <code>inpudId</code>.</p>
+<p>The second argument, <code>label</code>, is the display text for the input box.</p>
+<p>The third argument, <code>placeholder</code>, is helper text inside the text box.</p>
+<p><code>textInput()</code> can handle other arguments, such as specifying the width of the text box, or defining and initial value. Check <code>?textInput</code> to see what you can do!</p>
+<p>Nonetheless, at this point, our app should look like this:</p>
+<div class="figure">
+<img src="img/hello_shiny4.png" />
+
+</div>
+<p>Hey, now our app is starting to look more like an app! While we can enter text in our aptly named text box, there is still no way for the user to submit their response once they do so!</p>
+</div>
+<div id="user-actions" class="section level2">
+<h2>User Actions</h2>
+<p>The most useful user action function is <code>actionButton()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+  <span class="kw">titlePanel</span>(<span class="st">&quot;This is my first shiny app!&quot;</span>),
+  <span class="kw">sidebarLayout</span>(<span class="kw">sidebarPanel</span>(
+    <span class="kw">textInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">h5</span>(<span class="st">&quot;What is your name?&quot;</span>), <span class="dt">placeholder =</span> <span class="st">&quot;Enter text...&quot;</span>),
+    ## Building up our sidebar in the order we want the items to fill:
+    ## Our text box with question above it, then our action button to submit
+    <span class="kw">actionButton</span>(<span class="dt">inputId =</span> <span class="st">&#39;submit&#39;</span>, <span class="dt">lablel =</span> <span class="st">&#39;submit&#39;</span>)
+  ),
+                <span class="kw">mainPanel</span>(),
+                <span class="dt">position =</span> <span class="st">&#39;left&#39;</span>,
+                <span class="dt">fluid =</span> <span class="ot">TRUE</span>)
+)</code></pre></div>
+<p>Like the <code>textInput()</code> function, the <code>actionButton()</code> function takes <code>inputId</code> and <code>label</code> arguments so that the button reaction can be identified and the button has some help text, respectively.</p>
+<div class="figure">
+<img src="img/hello_shiny5.png" />
+
+</div>
+<p>Hot dog! Except, it still doesn’t do anything when the user clicks ‘submit’ :(</p>
+</div>
+</div>
+<div id="server-redefined" class="section level1">
+<h1>Server Redefined</h1>
+<p>The other side of reactive programming is that once the app receives a user-defined response, the app actually does something with it! In this section, we will tell the app to take the supplied text and print a nice message for our user to enjoy.</p>
+<p>Remember, since up until now we haven’t had any reactive elements to our app, our server function was pretty empty:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){
+  ## Build how the app should react to the user/page here
+}</code></pre></div>
+<p>However, the arguments that are provided to the function give us some hint as to what we should expect. Presumably, everything that is being passed back and forth between the UI and server is contained within <code>input</code> and <code>ouput</code> objects that are being passed as arguments to the server function.</p>
+<p>From a coding viewpoint, we have to ask ourselves what we want our app to do in order to decide how to code it. Most simply, we want the app to take the user-defined input from our text box, concatenate it with some pre-defined message, and then display it. Recall, that in our UI code we have two actions that the user defines –the text box and the button. Both of these actions have the <code>inputId</code> argument as part of the their function. We can access these variables within the <code>input</code> object like we would any other object in <code>R</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">server &lt;-<span class="st"> </span><span class="cf">function</span>(session, input, output) {
+  ## Build how the app should react to the user/page here
+    output<span class="op">$</span>name &lt;-<span class="st"> </span><span class="kw">renderText</span>({
+      <span class="kw">paste0</span>(<span class="st">&#39;Hello, &#39;</span>, input<span class="op">$</span>text, <span class="st">&#39;! Have a fantastic day!&#39;</span>)
+  })
+}</code></pre></div>
+<p><code>shiny</code> provides a number of base functions that allow for reactive rendering of objects, including text, images, and plots. Here we use the <code>renderText()</code> function to take the user-defined text (stored in <code>input$text</code>) and paste it into a personal message that we store in our output variable as <code>name</code>.</p>
+<p>If we tried to paste our input variable with out text variable the app would crash. This is because the app is expecting the text input that we defined in the UI to be reactive, and when we call for it outside of a reactive expression, it blows up.</p>
+<div id="quick-detour-back-to-the-ui" class="section level2">
+<h2>Quick detour back to the UI</h2>
+<p>Go ahead and try to run the app with our updated server code. Despite defining some output, we still see nothing! What gives, man?! Well, we are missing one last piece of code. We need to print our <code>name</code> variable back on to the UI. <code>shiny</code> comes with several pre-defined UI output functions for text, images, and plots (seeing a theme here?):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+
+  <span class="kw">titlePanel</span>(<span class="st">&quot;This is my first shiny app!&quot;</span>),
+  <span class="kw">sidebarLayout</span>(<span class="kw">sidebarPanel</span>(
+    <span class="kw">textInput</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">h5</span>(<span class="st">&quot;What is your name?&quot;</span>), <span class="dt">placeholder =</span> <span class="st">&quot;Enter text...&quot;</span>),
+    <span class="kw">hr</span>(), <span class="co"># Horizontal rule, to space out our objects a bit more...</span>
+    <span class="kw">actionButton</span>(<span class="st">&#39;submit&#39;</span>,<span class="st">&#39;submit&#39;</span>)),
+    <span class="kw">mainPanel</span>(
+      ## Just stick this bad boy here...
+      <span class="kw">textOutput</span>(<span class="dt">outputId =</span> <span class="st">&#39;name&#39;</span>)
+    ),
+    <span class="dt">position =</span> <span class="st">&#39;left&#39;</span>,
+    <span class="dt">fluid =</span> <span class="ot">TRUE</span>)
+
+)</code></pre></div>
+<p>The <code>textOutput()</code> function takes as its argument the variable name from the <code>output</code> object that should be rendered. In this case, we named it <code>name</code>.</p>
+<div class="figure">
+<img src="img/hello_shiny6.png" />
+
+</div>
+<p>Looks good…wait, what? It is updating our message in real time and not waiting for the user to submit a response by clicking “submit”! But we went through all of that effort to include a button on our UI! It’d be a shame to waste it.</p>
+</div>
+<div id="making-the-app-morereactive" class="section level2">
+<h2>Making the app more…reactive</h2>
+<p>The last thing to do is have our app be patient and wait for the user to signal they are done by submitting their response via the button. This is achieved by setting up an “observer,” or an if-then statement that is constantly on the lookout for when a condition is met. In our case, we want our observer to trigger an action when a button “event” occurs.</p>
+<p>We create an “observer” by calling the <code>observeEvent()</code> function. This function takes a reactive “event” (<code>eventExpr</code>) and what to do if that event occurs (<code>handlerExpr</code>) as input.</p>
+<p>Recall that we cleverly gave our submit button an <code>inputId</code> of <code>submit</code>. Therefore, if our button event occurs (i.e., gets clicked), the parameter <code>submit</code> that exists inside our <code>input</code> object will be <code>TRUE</code>. The only other thing we need to pass to the observer is what to do when this event occurs, which we already defined above in the <code>renderText()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {
+  ## Make an observer!
+  <span class="kw">observeEvent</span>(<span class="dt">eventExpr =</span> input<span class="op">$</span>submit, <span class="dt">handlerExpr =</span> {
+    output<span class="op">$</span>name &lt;-<span class="st"> </span><span class="kw">renderText</span>({
+      <span class="kw">paste0</span>(<span class="st">&#39;Hello, &#39;</span>, input<span class="op">$</span>text, <span class="st">&#39;! Have a fantastic day!&#39;</span>)
+    })
+  })
+}</code></pre></div>
+<p>The final product (and what your <code>app.R</code> file should look like) is as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+  <span class="kw">titlePanel</span>(<span class="st">&quot;This is my first shiny app!&quot;</span>),
+  <span class="kw">sidebarLayout</span>(<span class="kw">sidebarPanel</span>(
+    <span class="kw">textInput</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">h5</span>(<span class="st">&quot;What is your name?&quot;</span>), <span class="dt">placeholder =</span> <span class="st">&quot;Enter text...&quot;</span>),
+    <span class="kw">hr</span>(),
+    <span class="kw">actionButton</span>(<span class="st">&#39;submit&#39;</span>,<span class="st">&#39;submit&#39;</span>)),
+    <span class="kw">mainPanel</span>(
+      <span class="kw">textOutput</span>(<span class="st">&#39;name&#39;</span>)
+    ),
+    <span class="dt">position =</span> <span class="st">&#39;left&#39;</span>,
+    <span class="dt">fluid =</span> <span class="ot">TRUE</span>)
+)
+
+server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {
+  ## Build how the app should react to the user/page here
+  <span class="kw">observeEvent</span>(<span class="dt">eventExpr =</span> input<span class="op">$</span>submit, <span class="dt">handlerExpr =</span> {
+    output<span class="op">$</span>name &lt;-<span class="st"> </span><span class="kw">renderText</span>({
+      <span class="kw">paste0</span>(<span class="st">&#39;Hello, &#39;</span>, input<span class="op">$</span>text, <span class="st">&#39;! Have a fantastic day!&#39;</span>)
+    })
+  })
+}
+
+shiny<span class="op">::</span><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</code></pre></div>
+<p>Continue on to a more <a href="io_app.html">intermediate example</a></p>
+</div>
 </div>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>

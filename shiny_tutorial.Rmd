@@ -11,16 +11,35 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 
 # Overview
+This group of tutorials is meant to be a *brief* and *gentle* introduction to `shiny`.
 
-## What is this Shiny you speak of?
+Fair warning: If you have experience with the `shiny` package or any web development,
+this tutorial is probably not for you. Rstudio has several more advanced topics for
+programming with shiny. In addition, [Dean Attali](https://github.com/daattali/advanced-shiny)
+has a nice curated list of shiny topics. Check out the [resources page](beyond_hello.html)
+for more info.
+
+## What is this "Shiny" you speak of?
+`shiny` is an `R` package by RStudio that allows for the creation of interactive "web apps".
+Web apps is quoted because shiny apps need not be deployed on the web, nor do they have to be
+"apps" in the sense that they require some interactive/reactive content.
+
+A shiny app written using shiny syntax is really just a wrapper around a lot of HTML, CSS,
+and JavaScript code. The benefit to using the `shiny` package as opposed to standalone
+HTML is two-fold: First, the shiny syntax should be (more) familiar to long-term `R` users,
+and two, it is relatively easy and plays nicely with `R`.
+
+Even if you know HTML, JavaScript, or CSS, the raw power of these programming languages
+can easily be incorporated into a shiny application. We will see some very basic HTML
+code in this tutorial, but for more integration check out the page on
+[extending](beyond_hello.html) shiny beyond this introduction.
 
 # Preparation
-
-Throughout this tutorial, we will be using several core packagesto build
+Throughout this tutorial we will be using several core packages to build
 each of the applications. You can check to see if you already have them
 downloaded, and if not install them by running the code below:
 
@@ -38,18 +57,27 @@ The main packages we are going to deal with are:
 - `shiny`: the base package, from which most of the shiny architecture
 is built on.
 
-- `shinyjs`: A Javascript library for shiny; allows for some more complex
+- `shinyjs`: A JavaScript library for shiny; allows for some more complex
 functions and additions to shiny.
+
+Feel free to clone the whole site repo on [GitHub](https://github.com/d-bohn/tutorials),
+or download a standalone [zip file](https://psu.box.com/s/xsevf3t7e43sz4ry9mttrnqjqk0k48hz)
+with all of the necessary code.
 
 # Table of Contents
 
-1). Hello, Shiny!
-    - [Part I](hello_shiny.html) - Basic shiny components
-    - [Part II](hello_shinyII.html) - Making my first app a bit more personal
+1). Hello, shiny!
 
-2). Hello, interactive programming! - A simple user file input, summary output app
+  - [Part I](hello_shiny.html) - Basic shiny components
+  - [Part II](hello_shinyII.html) - Making my first app a bit more personal
 
-3). Hello, survey! - Creating and distrbuting surveys in Shiny
+2). Hello, interactive applications! - A simple user file input, summary output app
 
-4). Beyond a simple introduction
+  - [Intermediate example](io_app.html)
+    
+3). Hello, survey! - Creating a simple survey in shiny
+    
+  - [Example](simple_shiny_survey.html)
+
+3). [Beyond a simple introduction](beyond_hello.html)
 

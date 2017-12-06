@@ -239,9 +239,25 @@ $(document).ready(function () {
       <a href="hrv_stats.html">HRV statistics</a>
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">Using Shiny for Psychological Research</li>
+    <li class="dropdown-header">Using shiny for Psychological Research</li>
     <li>
       <a href="shiny_tutorial.html">Overview and introduction</a>
+    </li>
+    <li class="dropdown-header">My first shiny app</li>
+    <li>
+      <a href="hello_shiny.html">Hello, shiny! Part I</a>
+    </li>
+    <li>
+      <a href="hello_shinyII.html">Hello, shiny! Part II</a>
+    </li>
+    <li>
+      <a href="io_app.html">Making shiny app more interactive</a>
+    </li>
+    <li>
+      <a href="simple_shiny_survey.html">Simple shiny survey</a>
+    </li>
+    <li>
+      <a href="beyond_hello.html">Additional shiny resources</a>
     </li>
     <li class="divider"></li>
   </ul>
@@ -255,9 +271,8 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">PSU Graduate Student Resources</li>
     <li>
-      <a href="http://bit.ly/psych_grad_resources"></a>
+      <a href="http://bit.ly/psych_grad_resources">PSU Graduate Student Resources</a>
     </li>
   </ul>
 </li>
@@ -295,13 +310,13 @@ $(document).ready(function () {
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>The goal of this tutorial is to orient you to the different parts of a shiny app, how each section is structured</p>
+<p>The goal of this tutorial is to orient you to the different parts of a shiny app, how each part is structured, and some basic shiny commands/functions. In the first part, we will build our UI and server. In the second part, we will personalize the app by allowing for user input that changes the output.</p>
 </div>
 <div id="hello-shiny-what-makes-you-special" class="section level1">
 <h1>Hello, Shiny! What makes you special?</h1>
 <div id="shiny-ui-and-server" class="section level2">
 <h2>Shiny UI and Server</h2>
-<p>Each shiny app consists of a <code>UI</code> (user interface), or what the person actually sees on the screen, and a <code>server</code>, or how each app should be run. In older versions of shiny, these had to be seperate, consisting of a <code>UI.R</code> and a <code>server.R</code> files. Since shiny v0.10.2, these can now be combined into a single file, <code>app.R</code>. All <code>app.R</code> files will consist of the following structure:</p>
+<p>Each shiny app consists of a <code>UI</code> (user interface), or what the user actually sees on the screen, and a <code>server</code>, or how each app should be run. In older versions of shiny, these had to be separate, consisting of a <code>UI.R</code> and a <code>server.R</code> files. Since shiny v0.10.2, these can now be combined into a single file, <code>app.R</code>. All <code>app.R</code> files will consist of the following structure:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
 
 ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
@@ -326,7 +341,7 @@ shiny<span class="op">::</span><span class="kw">shinyApp</span>(<span class="dt"
 </div>
 <div id="running-the-app" class="section level2">
 <h2>Running the app</h2>
-<p>After you save the document as <code>app.R</code>, and if you are using RStuido, you should see a button in the top right corner to run the app.</p>
+<p>After you save the document as <code>app.R</code>, and if you are using RStudio, you should see a button in the top right corner to run the app.</p>
 <div class="figure">
 <img src="img/run_app.png" />
 
@@ -339,14 +354,14 @@ shiny<span class="op">::</span><span class="kw">shinyApp</span>(<span class="dt"
 </div>
 <div id="hello-shiny-how-do-i-build-you" class="section level1">
 <h1>Hello, shiny! How do I build you?</h1>
-<p>Even though both the UI and the server are in one file, for the purposes of this first walkthrough I am going to break them down into their seperate components. Just know that both of them should exist in the same <code>app.R</code> file.</p>
+<p>Even though both the UI and the server are in one file, for the purposes of this first walkthrough I am going to break them down into their separate components. Just know that both of them should exist in the same <code>app.R</code> file.</p>
 <div id="user-interface" class="section level2">
 <h2>User Interface</h2>
-<p>The first thing we want to define is a page. The <code>fluidPage()</code> argument is nice because it automatically defines the boundaries of the page based on the dimensions current computer screen, and if the user changes the size of the window.</p>
+<p>The first thing we want to define is a page. The <code>fluidPage()</code> argument is nice because it automatically defines the boundaries of the page based on the dimensions of current computer screen, as well as if the user changes the size of the window.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
 
 )</code></pre></div>
-<p>We can’t run this app yet because we don’t have a server function defined yet. even if we did, it would just be a blank page. To add <em>something</em> to the page, we can simply just stick a header/title at the top:</p>
+<p>We can’t run this app yet because we don’t have a server function defined yet. Even if we did, it would just be a blank page. To add <em>something</em> to the page, we can add a simple header/title to the top:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
   <span class="kw">titlePanel</span>(<span class="st">&quot;This is my first shiny app!&quot;</span>)
 )</code></pre></div>
@@ -366,11 +381,71 @@ shiny<span class="op">::</span><span class="kw">shinyApp</span>(<span class="dt"
 
 </div>
 </div>
-<div id="shiny-gets-personal" class="section level2">
-<h2>Shiny Gets Personal</h2>
+<div id="crash-course-in-html" class="section level2">
+<h2>Crash course in HTML</h2>
+<p>What is happening “behind the scenes” when we call the <code>titlePanel()</code> function? Go ahead and run <code>titlePanel(&quot;What is happening?&quot;)</code> in the console and see what happens.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">titlePanel</span>(<span class="st">&quot;What is happening?&quot;</span>)</code></pre></div>
+<h2>What is happening?</h2>
+<p>If you are familiar with HTML you will immediately recognize the output as a level two text header. In fact, many of the shiny functions are just convenience wrappers for html (or JavaScript). There are a number of these wrappers for defining text of different sizes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
+<span class="kw">h1</span>(<span class="st">&#39;Header1&#39;</span>)</code></pre></div>
+<h1>Header1</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">h2</span>(<span class="st">&#39;Header2&#39;</span>)</code></pre></div>
+<h2>Header2</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#...</span>
+<span class="kw">h6</span>(<span class="st">&quot;Header6&quot;</span>)</code></pre></div>
+<h6>Header6</h6>
+<p>There are also a number of HTML “tags” that are built into shiny for text formatting aside from headers. You can get a full list of HTML tags by running:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(tags)</code></pre></div>
+<pre><code>##   [1] &quot;a&quot;           &quot;abbr&quot;        &quot;address&quot;     &quot;area&quot;        &quot;article&quot;    
+##   [6] &quot;aside&quot;       &quot;audio&quot;       &quot;b&quot;           &quot;base&quot;        &quot;bdi&quot;        
+##  [11] &quot;bdo&quot;         &quot;blockquote&quot;  &quot;body&quot;        &quot;br&quot;          &quot;button&quot;     
+##  [16] &quot;canvas&quot;      &quot;caption&quot;     &quot;cite&quot;        &quot;code&quot;        &quot;col&quot;        
+##  [21] &quot;colgroup&quot;    &quot;command&quot;     &quot;data&quot;        &quot;datalist&quot;    &quot;dd&quot;         
+##  [26] &quot;del&quot;         &quot;details&quot;     &quot;dfn&quot;         &quot;div&quot;         &quot;dl&quot;         
+##  [31] &quot;dt&quot;          &quot;em&quot;          &quot;embed&quot;       &quot;eventsource&quot; &quot;fieldset&quot;   
+##  [36] &quot;figcaption&quot;  &quot;figure&quot;      &quot;footer&quot;      &quot;form&quot;        &quot;h1&quot;         
+##  [41] &quot;h2&quot;          &quot;h3&quot;          &quot;h4&quot;          &quot;h5&quot;          &quot;h6&quot;         
+##  [46] &quot;head&quot;        &quot;header&quot;      &quot;hgroup&quot;      &quot;hr&quot;          &quot;html&quot;       
+##  [51] &quot;i&quot;           &quot;iframe&quot;      &quot;img&quot;         &quot;input&quot;       &quot;ins&quot;        
+##  [56] &quot;kbd&quot;         &quot;keygen&quot;      &quot;label&quot;       &quot;legend&quot;      &quot;li&quot;         
+##  [61] &quot;link&quot;        &quot;mark&quot;        &quot;map&quot;         &quot;menu&quot;        &quot;meta&quot;       
+##  [66] &quot;meter&quot;       &quot;nav&quot;         &quot;noscript&quot;    &quot;object&quot;      &quot;ol&quot;         
+##  [71] &quot;optgroup&quot;    &quot;option&quot;      &quot;output&quot;      &quot;p&quot;           &quot;param&quot;      
+##  [76] &quot;pre&quot;         &quot;progress&quot;    &quot;q&quot;           &quot;ruby&quot;        &quot;rp&quot;         
+##  [81] &quot;rt&quot;          &quot;s&quot;           &quot;samp&quot;        &quot;script&quot;      &quot;section&quot;    
+##  [86] &quot;select&quot;      &quot;small&quot;       &quot;source&quot;      &quot;span&quot;        &quot;strong&quot;     
+##  [91] &quot;style&quot;       &quot;sub&quot;         &quot;summary&quot;     &quot;sup&quot;         &quot;table&quot;      
+##  [96] &quot;tbody&quot;       &quot;td&quot;          &quot;textarea&quot;    &quot;tfoot&quot;       &quot;th&quot;         
+## [101] &quot;thead&quot;       &quot;time&quot;        &quot;title&quot;       &quot;tr&quot;          &quot;track&quot;      
+## [106] &quot;u&quot;           &quot;ul&quot;          &quot;var&quot;         &quot;video&quot;       &quot;wbr&quot;</code></pre>
+<p>You can get details on what each tag does <a href="https://shiny.rstudio.com/articles/tag-glossary.html">online</a>, but some common ones include: - <code>tags$b()</code> bolds text - <code>tags$br()</code> inserts a line break - <code>tags$div()</code> adds a division, usually to be formatted in a specific way - <code>tags$p()</code> inserts a paragraph of text - <code>tags$i()</code> italicizes text - <code>tags$img()</code> creates an image</p>
+<p><strong>Caveat</strong>: Notice that the tags need to be superseded by <code>tags$</code>, but the header functions do not.</p>
+<p>If we wanted to add some of these headers or tags to our app-in-progress, we would simply add them in our <code>fluidPage()</code> function followed by a comma:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+  ## Build what the person sees in the app here
+  <span class="kw">titlePanel</span>(<span class="st">&quot;This is my first shiny app!&quot;</span>),
+  <span class="kw">h3</span>(<span class="st">&quot;Oh hey, a level 3 header exists now&quot;</span>),
+  <span class="kw">p</span>(<span class="st">&quot;Here is some text, but it is left aligned. Curses!&quot;</span>),
+  tags<span class="op">$</span><span class="kw">div</span>(
+    <span class="kw">p</span>(<span class="st">&quot;Centered text makes me feel better.&quot;</span>),
+    <span class="dt">style=</span><span class="st">&quot;text-align: center;&quot;</span>
+  )
+  )</code></pre></div>
+<p><strong>Intermediate exercise</strong>: Go back to the simple app with only a title. Can you use headers and tags to recreate an app that looks like this:</p>
+<div class="figure">
+<img src="img/hello_shiny2.png" />
+
+</div>
+<p><em>Hint</em>: The <code>tags$img()</code> function takes <code>src</code>, <code>width</code>, and <code>height</code> arguments. You don’t have to supply both <code>width</code> and <code>height</code>. If only one is provided, the image will scale based off of the one argument. The <code>src</code> argument can be a URL or a path to a local image. For example:</p>
+<p><code>tags$img(src='http://www.something.com/img1', width = 300)</code></p>
+<p>If you want to compare the code you wrote to the code I wrote, or if you get stuck, take a look at the <a href="https://raw.githubusercontent.com/d-bohn/tutorials/master/R/shiny_tutorial/hello_shiny/app.R">raw code here</a>.</p>
+</div>
+</div>
+<div id="shiny-gets-personal" class="section level1">
+<h1>Shiny Gets Personal</h1>
 <p>Continue to part II of this tutorial where we will take this very basic app and make it more personal by asking the user for input, and supplying output based on it!</p>
 <p><a href="hello_shinyII.html">CONTINUE TO PART II</a></p>
-</div>
 </div>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Daniel N. Albohn" />
+
+<meta name="date" content="2017-12-06" />
+
+<title>More Interactive Applications</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Resources for Tutorials</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-cog"></span>
+     
+    R Tutorials
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Analyzing Heart Rate Variability in R</li>
+    <li>
+      <a href="hrv_tutorial.html">Overview and introduction</a>
+    </li>
+    <li>
+      <a href="extract_ecg.html">Extracting data</a>
+    </li>
+    <li>
+      <a href="compute_ibi.html">Computing interbeat interval</a>
+    </li>
+    <li>
+      <a href="ecg_outliers.html">HRV outlier analysis</a>
+    </li>
+    <li>
+      <a href="hrv_triggers.html">Dealing with triggers</a>
+    </li>
+    <li>
+      <a href="hrv_stats.html">HRV statistics</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Using shiny for Psychological Research</li>
+    <li>
+      <a href="shiny_tutorial.html">Overview and introduction</a>
+    </li>
+    <li class="dropdown-header">My first shiny app</li>
+    <li>
+      <a href="hello_shiny.html">Hello, shiny! Part I</a>
+    </li>
+    <li>
+      <a href="hello_shinyII.html">Hello, shiny! Part II</a>
+    </li>
+    <li>
+      <a href="io_app.html">Making shiny app more interactive</a>
+    </li>
+    <li>
+      <a href="simple_shiny_survey.html">Simple shiny survey</a>
+    </li>
+    <li>
+      <a href="beyond_hello.html">Additional shiny resources</a>
+    </li>
+    <li class="divider"></li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-compass"></span>
+     
+    Additional Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="http://bit.ly/psych_grad_resources">PSU Graduate Student Resources</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">
+    <span class="fa fa-envelope"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="site-info.html">
+    <span class="fa fa-info"></span>
+     
+    Site info
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">More Interactive Applications</h1>
+<h4 class="author"><em>Daniel N. Albohn</em></h4>
+<h4 class="date"><em>12/06/2017</em></h4>
+
+</div>
+
+
+<div id="stepping-up-the-problem" class="section level1">
+<h1>Stepping Up the Problem</h1>
+<p>Obviously, we are all shiny experts by now. The previous walk through gave us a crash course on how to layout an app, how to provide static elements like text and images, and finally how to deal with reactive events by setting up an observer.</p>
+<p>A logical next step might be how to construct an app that not only responds to user-defined information, but different types of user information.</p>
+<p>Let’s build an app that takes a <code>csv</code> file, allows the user to preview the data file that was read in, select two numeric variables, and plot those against each other. This seems like quite an easy task, given what we just accomplished before, but when we break down the step-by-step issues it is quite complex.</p>
+<p><strong>Disclosure</strong>: Most of this app was scavenged from parts of the <a href="http://shiny.rstudio.com/gallery/file-upload.html">File Upload</a> tutorial, and this <a href="https://stackoverflow.com/questions/36949769/how-to-plot-uploaded-dataset-using-shiny">stackoverflow</a> problem on reactive data sets.</p>
+</div>
+<div id="the-problems" class="section level1">
+<h1>The Problem(s)</h1>
+<p>An in-depth walk through of this issue is beyond the scope of this tutorial, but let me highlight some of the new issues that this problem brings to a coder’s attention.</p>
+<p><strong>1). Upload an external <code>.csv</code> file</strong></p>
+<ul>
+<li>Allow the user to search machine for file and upload it
+<ul>
+<li><code>fileInput()</code></li>
+</ul></li>
+<li>Cause non-perfect <code>.csv</code> files to not break the app
+<ul>
+<li>User selected file attributes</li>
+</ul></li>
+</ul>
+<p><strong>2). Preview uploaded file as data frame</strong></p>
+<ul>
+<li>If the file can be uploaded successfully, need to make the data frame reactive, not static
+<ul>
+<li>Can create a <code>reactive()</code> data object</li>
+<li>Grabbing the first few rows of our reactive data + <code>tableOutput()</code></li>
+</ul></li>
+</ul>
+<p><strong>3). Select two numeric variables</strong></p>
+<ul>
+<li>How are we going to fit all of this on the same page?
+<ul>
+<li>Scroll?</li>
+<li><code>tabsetPanel()</code> with one for uploading the file, another for selecting and plotting</li>
+</ul></li>
+<li>Allow the user to select two variables that can constantly change
+<ul>
+<li>Drop down list with variable names from data set</li>
+<li><code>selectInput()</code></li>
+</ul></li>
+<li>Allow for constant updating of user-defined variable combinations
+<ul>
+<li><code>updateSelectInput()</code></li>
+</ul></li>
+<li>Isolate those variables somehow for further use
+<ul>
+<li>Subsetting a reactive data frame?</li>
+</ul></li>
+</ul>
+<p><strong>4). Plot user-selected variables</strong></p>
+<ul>
+<li><code>renderPlot()</code> + <code>plotOutput()</code></li>
+</ul>
+</div>
+<div id="the-solution" class="section level1">
+<h1>The Solution</h1>
+<p>You can see this app running on <a href="https://d-bohn.shinyapps.io/io_example_app/">shinyapps.io</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
+<span class="kw">library</span>(ggplot2)
+
+ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
+  <span class="kw">titlePanel</span>(<span class="st">&quot;File Upload and Scatter Plot&quot;</span>),
+  <span class="kw">tabsetPanel</span>(
+    
+    ## First tab
+    <span class="kw">tabPanel</span>(<span class="st">&quot;Upload File&quot;</span>,
+             
+             ## A sidebar layout within the first tab
+             <span class="kw">sidebarLayout</span>(
+               
+               ## left sidebar gets this:
+               <span class="kw">sidebarPanel</span>(
+                 <span class="kw">fileInput</span>(<span class="st">&#39;file1&#39;</span>, <span class="st">&#39;Choose CSV File&#39;</span>,
+                           <span class="dt">accept=</span><span class="kw">c</span>(<span class="st">&#39;text/csv&#39;</span>, 
+                                    <span class="st">&#39;text/comma-separated-values,text/plain&#39;</span>, 
+                                    <span class="st">&#39;.csv&#39;</span>)),
+                 ## -----
+                 tags<span class="op">$</span><span class="kw">br</span>(),
+                 ## -----
+                 
+                 ## Some values for how to read in the file
+                 <span class="kw">checkboxInput</span>(<span class="st">&#39;header&#39;</span>, <span class="st">&#39;Header&#39;</span>, <span class="ot">TRUE</span>),
+                 <span class="kw">radioButtons</span>(<span class="st">&#39;sep&#39;</span>, <span class="st">&#39;Separator&#39;</span>,
+                              <span class="kw">c</span>(<span class="dt">Comma=</span><span class="st">&#39;,&#39;</span>,
+                                <span class="dt">Semicolon=</span><span class="st">&#39;;&#39;</span>,
+                                <span class="dt">Tab=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>),
+                              <span class="st">&#39;,&#39;</span>)
+               ),
+               
+               ## Main panel gets this:
+               <span class="kw">mainPanel</span>(
+                 <span class="kw">tableOutput</span>(<span class="st">&#39;contents&#39;</span>)
+               )
+             )
+    ),
+    
+    ## Second tab
+    <span class="kw">tabPanel</span>(<span class="st">&quot;Scatter Plot&quot;</span>,
+             <span class="kw">sidebarLayout</span>(
+               <span class="kw">sidebarPanel</span>(
+                 
+                 <span class="kw">selectInput</span>(<span class="st">&#39;xcol&#39;</span>, <span class="st">&#39;X Variable&#39;</span>, <span class="st">&quot;&quot;</span>),
+                 <span class="kw">selectInput</span>(<span class="st">&#39;ycol&#39;</span>, <span class="st">&#39;Y Variable&#39;</span>, <span class="st">&quot;&quot;</span>, <span class="dt">selected =</span> <span class="st">&quot;&quot;</span>)
+                 
+               ),
+               <span class="kw">mainPanel</span>(
+                 <span class="kw">plotOutput</span>(<span class="st">&#39;MyPlot&#39;</span>)
+               )
+             )
+    )
+    
+  )
+)
+
+server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {
+  <span class="co"># added &quot;session&quot; because updateSelectInput requires it</span>
+  
+  data &lt;-<span class="st"> </span><span class="kw">reactive</span>({ 
+    <span class="kw">req</span>(input<span class="op">$</span>file1) 
+    
+    inFile &lt;-<span class="st"> </span>input<span class="op">$</span>file1 
+
+    df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(inFile<span class="op">$</span>datapath, <span class="dt">header =</span> input<span class="op">$</span>header, <span class="dt">sep =</span> input<span class="op">$</span>sep)
+  
+    <span class="kw">updateSelectInput</span>(session, <span class="dt">inputId =</span> <span class="st">&#39;xcol&#39;</span>, <span class="dt">label =</span> <span class="st">&#39;X Variable&#39;</span>, <span class="dt">choices =</span> <span class="kw">names</span>(df),
+                      <span class="dt">selected =</span> <span class="kw">names</span>(df)[<span class="kw">sapply</span>(df, is.numeric)])
+    <span class="kw">updateSelectInput</span>(session, <span class="dt">inputId =</span> <span class="st">&#39;ycol&#39;</span>, <span class="dt">label =</span> <span class="st">&#39;Y Variable&#39;</span>, <span class="dt">choices =</span> <span class="kw">names</span>(df),
+                      <span class="dt">selected =</span> <span class="kw">names</span>(df)[<span class="kw">sapply</span>(df, is.numeric)])
+    
+    <span class="kw">return</span>(df)
+  })
+  
+  output<span class="op">$</span>contents &lt;-<span class="st"> </span><span class="kw">renderTable</span>({
+    <span class="kw">head</span>(<span class="kw">data</span>(), <span class="dv">10</span>)
+  })
+  
+  output<span class="op">$</span>MyPlot &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({
+    
+    x &lt;-<span class="st"> </span><span class="kw">data</span>()[, input<span class="op">$</span>xcol]
+    y &lt;-<span class="st"> </span><span class="kw">data</span>()[, input<span class="op">$</span>ycol]
+    newdf &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(x,y))
+    
+    <span class="kw">ggplot</span>(newdf, <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<span class="st">      </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">      </span><span class="kw">xlab</span>(<span class="kw">as.character</span>(input<span class="op">$</span>xcol)) <span class="op">+</span>
+<span class="st">      </span><span class="kw">ylab</span>(<span class="kw">as.character</span>(input<span class="op">$</span>ycol)) <span class="op">+</span>
+<span class="st">      </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>) <span class="op">+</span>
+<span class="st">      </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">15</span>)
+    
+  })
+}
+
+<span class="kw">shinyApp</span>(ui, server)</code></pre></div>
+<p>If your itch for shiny tutorials still isn’t complete, check out how to use the <code>shiny</code> package for collecting surveys with this simple <a href="simple_shiny_survey.html">survey app</a>. You can also check out the <a href="beyond_hello.html">resource page</a> for more tutorials and how to extend shiny.</p>
+</div>
+
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

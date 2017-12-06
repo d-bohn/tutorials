@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Daniel N. Albohn" />
+
+<meta name="date" content="2017-12-06" />
+
+<title>Extending Shiny Beyond this Introduction</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Resources for Tutorials</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-cog"></span>
+     
+    R Tutorials
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Analyzing Heart Rate Variability in R</li>
+    <li>
+      <a href="hrv_tutorial.html">Overview and introduction</a>
+    </li>
+    <li>
+      <a href="extract_ecg.html">Extracting data</a>
+    </li>
+    <li>
+      <a href="compute_ibi.html">Computing interbeat interval</a>
+    </li>
+    <li>
+      <a href="ecg_outliers.html">HRV outlier analysis</a>
+    </li>
+    <li>
+      <a href="hrv_triggers.html">Dealing with triggers</a>
+    </li>
+    <li>
+      <a href="hrv_stats.html">HRV statistics</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Using shiny for Psychological Research</li>
+    <li>
+      <a href="shiny_tutorial.html">Overview and introduction</a>
+    </li>
+    <li class="dropdown-header">My first shiny app</li>
+    <li>
+      <a href="hello_shiny.html">Hello, shiny! Part I</a>
+    </li>
+    <li>
+      <a href="hello_shinyII.html">Hello, shiny! Part II</a>
+    </li>
+    <li>
+      <a href="io_app.html">Making shiny app more interactive</a>
+    </li>
+    <li>
+      <a href="simple_shiny_survey.html">Simple shiny survey</a>
+    </li>
+    <li>
+      <a href="beyond_hello.html">Additional shiny resources</a>
+    </li>
+    <li class="divider"></li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-compass"></span>
+     
+    Additional Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="http://bit.ly/psych_grad_resources">PSU Graduate Student Resources</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">
+    <span class="fa fa-envelope"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="site-info.html">
+    <span class="fa fa-info"></span>
+     
+    Site info
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Extending Shiny Beyond this Introduction</h1>
+<h4 class="author"><em>Daniel N. Albohn</em></h4>
+<h4 class="date"><em>12/06/2017</em></h4>
+
+</div>
+
+
+<div id="advanced-shiny-tutorials" class="section level1">
+<h1>Advanced shiny tutorials</h1>
+<ul>
+<li><a href="https://github.com/daattali/advanced-shiny">Dean Attali’s Advanced Shiny, Tips, and Tricks</a></li>
+<li><a href="https://shiny.rstudio.com/tutorial/">RStudio Video Tutorials</a></li>
+<li><a href="https://shiny.rstudio.com/gallery/widget-gallery.html">Shiny Widgets</a></li>
+<li><a href="https://shiny.rstudio.com/articles/gadgets.html">Shiny Gadgets</a></li>
+<li><a href="https://shiny.rstudio.com/articles/plot-interaction-advanced.html">Interactive Plots</a></li>
+<li><a href="https://shiny.rstudio.com/articles/persistent-data-storage.html">Persistant Data Storage for shiny apps</a></li>
+</ul>
+</div>
+<div id="advanced-shiny-topics" class="section level1">
+<h1>Advanced shiny topics</h1>
+<ul>
+<li><a href="http://rstudio.github.io/shinydashboard/">Shiny dashbaords I</a></li>
+<li><a href="https://shiny.rstudio.com/articles/dashboards.html">Shiny dashbaords II</a></li>
+<li><a href="https://deanattali.com/shinyjs/">shinyjs</a> - JavaScript in shiny</li>
+</ul>
+</div>
+<div id="some-of-my-favorite-advanced-shiny-projects" class="section level1">
+<h1>Some of my favorite advanced shiny projects</h1>
+<ul>
+<li><a href="https://gallery.shinyapps.io/rioweb/">File Converter</a></li>
+<li><a href="https://gallery.shinyapps.io/slr_diag/">Learning Linear Regression Diagnostics</a></li>
+<li><a href="https://gallery.shinyapps.io/CLT_prop/">Learning Central Limit Theorem</a></li>
+<li><a href="https://github.com/daattali/colourpicker">Colour picker addin</a></li>
+<li><a href="https://github.com/cardiomoon/ggplotAssist">Learn ggplot2 with ggplotAssist</a></li>
+<li><a href="https://www.jaredknowles.com/journal/2015/8/12/announcing-mertools">merTools</a> - Explore multilevel models</li>
+<li><a href="http://andrewgelman.com/2015/03/02/introducing-shinystan/">shinyStan</a> - Explore RStan models</li>
+<li><a href="http://www.writemycongress.com/">writemycongress</a></li>
+</ul>
+</div>
+<div id="deploying-shiny-apps" class="section level1">
+<h1>Deploying Shiny Apps</h1>
+<ul>
+<li><a href="https://shinyapps.io">shinyapps.io</a></li>
+</ul>
+</div>
+<div id="explore-yourself" class="section level1">
+<h1>Explore Yourself!</h1>
+<ul>
+<li><a href="https://www.showmeshiny.com/">User-Submitted shiny apps</a></li>
+<li><a href="https://shiny.rstudio.com/">RStudio’s shiny webpage</a></li>
+</ul>
+</div>
+
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/by-nc.png" height="400" width="65"/></a></p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

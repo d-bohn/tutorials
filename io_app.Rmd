@@ -1,0 +1,178 @@
+---
+title: "More Interactive Applications"
+author: "Daniel N. Albohn"
+date: "12/06/2017"
+output: 
+  html_document:
+    theme: cosmo
+    css: style.css
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+# Stepping Up the Problem
+Obviously, we are all shiny experts by now. The previous walk through gave us a crash
+course on how to layout an app, how to provide static elements like text and images, and
+finally how to deal with reactive events by setting up an observer.
+
+A logical next step might be how to construct an app that not only responds to
+user-defined information, but different types of user information.
+
+Let's build an app that takes a `csv` file, allows the user to preview the data file that
+was read in, select two numeric variables, and plot those against each other. This seems
+like quite an easy task, given what we just accomplished before, but when we break down
+the step-by-step issues it is quite complex.
+
+**Disclosure**: Most of this app was scavenged from parts of the
+[File Upload](http://shiny.rstudio.com/gallery/file-upload.html) tutorial,
+and this [stackoverflow](https://stackoverflow.com/questions/36949769/how-to-plot-uploaded-dataset-using-shiny)
+problem on reactive data sets.
+
+# The Problem(s)
+An in-depth walk through of this issue is beyond the scope of this tutorial, but let
+me highlight some of the new issues that this problem brings to a coder's attention.
+
+**1). Upload an external `.csv` file**
+  
+  - Allow the user to search machine for file and upload it
+    + `fileInput()`
+  - Cause non-perfect `.csv` files to not break the app
+    + User selected file attributes
+
+**2). Preview uploaded file as data frame**
+    
+  - If the file can be uploaded successfully, need to make the data frame
+  reactive, not static
+    + Can create a `reactive()` data object
+    + Grabbing the first few rows of our reactive data + `tableOutput()`
+
+**3). Select two numeric variables**
+    
+  - How are we going to fit all of this on the same page?
+    + Scroll?
+    + `tabsetPanel()` with one for uploading the file, another for selecting and
+    plotting
+  - Allow the user to select two variables that can constantly change
+    + Drop down list with variable names from data set
+    + `selectInput()`
+  - Allow for constant updating of user-defined variable combinations
+    + `updateSelectInput()`
+  - Isolate those variables somehow for further use
+    + Subsetting a reactive data frame?
+
+**4). Plot user-selected variables**
+  
+  - `renderPlot()` + `plotOutput()`
+
+# The Solution
+You can see this app running on [shinyapps.io](https://d-bohn.shinyapps.io/io_example_app/)
+
+```{r}
+library(shiny)
+library(ggplot2)
+
+ui <- fluidPage(
+  titlePanel("File Upload and Scatter Plot"),
+  tabsetPanel(
+    
+    ## First tab
+    tabPanel("Upload File",
+             
+             ## A sidebar layout within the first tab
+             sidebarLayout(
+               
+               ## left sidebar gets this:
+               sidebarPanel(
+                 fileInput('file1', 'Choose CSV File',
+                           accept=c('text/csv', 
+                                    'text/comma-separated-values,text/plain', 
+                                    '.csv')),
+                 ## -----
+                 tags$br(),
+                 ## -----
+                 
+                 ## Some values for how to read in the file
+                 checkboxInput('header', 'Header', TRUE),
+                 radioButtons('sep', 'Separator',
+                              c(Comma=',',
+                                Semicolon=';',
+                                Tab='\t'),
+                              ',')
+               ),
+               
+               ## Main panel gets this:
+               mainPanel(
+                 tableOutput('contents')
+               )
+             )
+    ),
+    
+    ## Second tab
+    tabPanel("Scatter Plot",
+             sidebarLayout(
+               sidebarPanel(
+                 
+                 selectInput('xcol', 'X Variable', ""),
+                 selectInput('ycol', 'Y Variable', "", selected = "")
+                 
+               ),
+               mainPanel(
+                 plotOutput('MyPlot')
+               )
+             )
+    )
+    
+  )
+)
+
+server <- function(input, output, session) {
+  # added "session" because updateSelectInput requires it
+  
+  data <- reactive({ 
+    req(input$file1) 
+    
+    inFile <- input$file1 
+
+    df <- read.csv(inFile$datapath, header = input$header, sep = input$sep)
+  
+    updateSelectInput(session, inputId = 'xcol', label = 'X Variable', choices = names(df),
+                      selected = names(df)[sapply(df, is.numeric)])
+    updateSelectInput(session, inputId = 'ycol', label = 'Y Variable', choices = names(df),
+                      selected = names(df)[sapply(df, is.numeric)])
+    
+    return(df)
+  })
+  
+  output$contents <- renderTable({
+    head(data(), 10)
+  })
+  
+  output$MyPlot <- renderPlot({
+    
+    x <- data()[, input$xcol]
+    y <- data()[, input$ycol]
+    newdf <- as.data.frame(cbind(x,y))
+    
+    ggplot(newdf, aes(x, y)) +
+      geom_point() +
+      xlab(as.character(input$xcol)) +
+      ylab(as.character(input$ycol)) +
+      stat_smooth(method = 'lm') +
+      theme_bw(base_size = 15)
+    
+  })
+}
+
+shinyApp(ui, server)
+```
+
+
+If your itch for shiny tutorials still isn't complete, check out how to use the `shiny`
+package for collecting surveys with this simple [survey app](simple_shiny_survey.html).
+You can also check out the [resource page](beyond_hello.html)
+for more tutorials and how to extend shiny.
+

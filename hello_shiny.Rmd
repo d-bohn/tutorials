@@ -25,7 +25,7 @@ the app by allowing for user input that changes the output.
 ## Shiny UI and Server
 Each shiny app consists of a `UI` (user interface), or what the user actually
 sees on the screen, and a `server`, or how each app should be run. In older
-versions of shiny, these had to be seperate, consisting of a `UI.R` and a
+versions of shiny, these had to be separate, consisting of a `UI.R` and a
 `server.R` files. Since shiny v0.10.2, these can now be combined into a single
 file, `app.R`. All `app.R` files will consist of the following structure:
 
@@ -60,7 +60,7 @@ shiny::shinyApp(ui=ui, server=server)
 ```
 
 ## Running the app
-After you save the document as `app.R`, and if you are using RStuido, you should
+After you save the document as `app.R`, and if you are using RStudio, you should
 see a button in the top right corner to run the app.
 
 ![](img/run_app.png)
@@ -80,7 +80,7 @@ runApp("R/shiny_tutorial/hello_shiny/")
 
 # Hello, shiny! How do I build you?
 Even though both the UI and the server are in one file, for the purposes of this
-first walkthrough I am going to break them down into their seperate components.
+first walkthrough I am going to break them down into their separate components.
 Just know that both of them should exist in the same `app.R` file.
 
 ## User Interface
@@ -136,7 +136,7 @@ titlePanel("What is happening?")
 
 If you are familiar with HTML you will immediately recognize the output as a level
 two text header. In fact, many of the shiny functions are just convenience wrappers for
-html (or javascript). There are a number of these wrappers for defining text of
+html (or JavaScript). There are a number of these wrappers for defining text of
 different sizes:
 
 ```{r eval=TRUE}
@@ -147,7 +147,7 @@ h2('Header2')
 h6("Header6")
 ```
 
-There are also a number of HTML "tags" that are built into shiny for text formating
+There are also a number of HTML "tags" that are built into shiny for text formatting
 aside from headers. You can get a full list of HTML tags by running:
 
 ```{r eval=TRUE}
@@ -158,12 +158,12 @@ You can get details on what each tag does [online](https://shiny.rstudio.com/art
 but some common ones include:
     - `tags$b()` bolds text
     - `tags$br()` inserts a line break
-    - `tags$div()` adds a division, usually to be formated in a specific way
-    - `tags$p()` inserts a paragrah of text
+    - `tags$div()` adds a division, usually to be formatted in a specific way
+    - `tags$p()` inserts a paragraph of text
     - `tags$i()` italicizes text
     - `tags$img()` creates an image
 
-**Caveat**: Notice that the tags need to be supersceeded by `tags$`, but
+**Caveat**: Notice that the tags need to be superseded by `tags$`, but
 the header functions do not.
 
 If we wanted to add some of these headers or tags to our app-in-progress, we
@@ -195,9 +195,7 @@ image. For example:
 `tags$img(src='http://www.something.com/img1', width = 300)`
 
 If you want to compare the code you wrote to the code I wrote, or if you get stuck,
-take a look at the [raw code here]()
-
-## App layouts
+take a look at the [raw code here](https://raw.githubusercontent.com/d-bohn/tutorials/master/R/shiny_tutorial/hello_shiny/app.R).
 
 # Shiny Gets Personal
 
